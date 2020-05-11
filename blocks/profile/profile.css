@@ -1,0 +1,22 @@
+@import url(./__info/profile__info.css);
+@import url(./__avatar/profile__avatar.css);
+@import url(./__button/profile__button.css);
+@import url(./__container/profile__container.css);
+@import url(./__name/profile__name.css);
+@import url(./__bio/profile__bio.css);
+@import url(./__button/_add/profile__button_add.css);
+@import url(./__button/_edit/profile__button_edit.css);
+
+.profile {
+  margin: 36.25px auto 0 auto;
+  color: #fff;
+  max-width: 882px;
+  width: 100%;
+  display: grid;
+  grid-template-areas: 
+    'avatar name button-edit button-add'
+    'avatar bio bio button-add';
+  grid-template-rows: 1fr .6fr;
+  grid-template-columns: 120px minmax(295px, max-content) auto auto;
+  gap: 3px 17px;
+}
