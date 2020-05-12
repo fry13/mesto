@@ -4,6 +4,7 @@
 @import url(./__input/_name/popup__input_name.css);
 @import url(./__input/_bio/popup__input_bio.css);
 @import url(./__save/popup__save.css);
+@import url(./__exit/popup__exit.css);
 
 .popup {
   position: fixed;
@@ -12,7 +13,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, .5);
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
 }
