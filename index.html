@@ -19,9 +19,11 @@
 
   <section class="profile">
     <img src="./images/avatar.jpg" alt="Ваш аватар" class="profile__avatar">
-    <p class="profile__name">Жак-Ив Кусто</p>
-    <p class="profile__bio">Исследователь океана</p> 
-    <button class="profile__button profile__button_edit"></button>            
+    <div class="profile__name-container">
+      <h1 class="profile__name">Жак-Ив Кусто</h1>
+      <button class="profile__button profile__button_edit"></button> 
+    </div>
+    <p class="profile__bio">Исследователь океана</p>                
     <button class="profile__button profile__button_add"></button>
   </section>
 
@@ -31,7 +33,7 @@
     <div class="elements__card">
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
+        <p class="elements__title">Карачаевск Карачаевск Карачаевск Карачаевск Карачаевск</p>
         <input type="button" class="elements__like"></input>
       </div>  
     </div>
@@ -47,7 +49,7 @@
     <div class="elements__card">
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
+        <p class="elements__title">КарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевск</p>
         <input type="button" class="elements__like"></input>
       </div>  
     </div>
@@ -89,10 +91,14 @@
 
   <div class="popup">
     <div class="popup__form">
+    <form class="popup__form-to-submit" action="">
+    <fieldset class="popup__input-container">
       <p class="popup__title">Редактировать профиль</p>
-      <input type="text" name="" value="" id="" class="popup__input popup__input_name">
-      <input type="text" name="" value="" id="" class="popup__input popup__input_bio">
-      <button class="popup__save">Сохранить</button>
+      <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
+      <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
+      <input value="Сохранить" type="submit" class="popup__save">
+    </fieldset>
+    </form>
     </div>
     <button class="popup__exit"></button>
   </div>

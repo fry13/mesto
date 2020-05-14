@@ -8,3 +8,18 @@
   align-self: center;
   justify-self: end;
 }
+
+@media screen and (max-width: 882px) {
+  .profile__button_add {
+    justify-self: center;
+    max-width: 500px;
+    width: 100%;
+    margin-top: 36px;
+  }
+}
+
+@media screen and (max-width: 882px) {
+  .profile__button_add {
+    max-width: 282px;
+  }
+}

@@ -4,6 +4,12 @@
 .header {
   margin: 45px auto 0 auto;
   max-width: 882px;
-  width: 95%;
-  text-align: start;
+}
+
+@media screen and (max-width: 882px) {
+  .header{
+    max-width: 100%;
+    margin: 28px auto 0 auto;
+  }
+
 }

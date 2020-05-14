@@ -6,4 +6,12 @@
   border: 0;
   position: fixed;
   margin: -183px 0 0 235px;
+  cursor: pointer;
+  transition: ease-out .2s;
+}
+
+.popup__exit:hover {
+  opacity: .6;
+  transform: rotate(90deg);
+  transition: ease-in .2s;
 }

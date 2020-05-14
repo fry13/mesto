@@ -6,10 +6,18 @@
 
 .elements {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, 282px);
   grid-template-rows: 1fr 1fr;
   margin: 47.25px auto 0 auto;
   max-width: 882px;
   width: 95%;
-  gap: 21px 18px;
+  gap: 20px 18px;
+  justify-content: center;
+}
+
+@media screen and (max-width: 882px) {
+  .elements {    
+    margin: 36px auto 0 auto;    
+    grid-template-columns: repeat(auto-fit, 282px);
+  }
 }

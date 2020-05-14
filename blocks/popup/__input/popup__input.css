@@ -12,3 +12,8 @@
   font-size: 14px;
   line-height: 17px;
 }
+
+.popup__input:focus {
+  outline: none;
+  border-bottom: 1px solid rgba(89, 46, 131, .9);
+}

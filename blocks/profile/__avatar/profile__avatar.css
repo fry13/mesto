@@ -3,5 +3,6 @@
   width: 120px;
   height: 120px;
   grid-area: avatar;
-  align-self: center;
+  align-self: top;
+  justify-self: center;
 }

@@ -1,29 +1,30 @@
-let popup = document.querySelector('.popup');
-let editProfile = document.querySelector('.profile__button_edit');
-let addPhoto = document.querySelector('.profile__button_add');
-let name = document.querySelector('.profile__name');
-let bio = document.querySelector('.profile__bio');
-let inputName = document.querySelector('.popup__input_name');
-let inputBio = document.querySelector('.popup__input_bio');
-let popupClose = document.querySelector('.popup__exit');
-let popupSave = document.querySelector('.popup__save');
+const popup = document.querySelector('.popup');
+const editProfile = document.querySelector('.profile__button_edit');
+const addPhoto = document.querySelector('.profile__button_add');
+const name = document.querySelector('.profile__name');
+const bio = document.querySelector('.profile__bio');
+const inputName = document.querySelector('.popup__input_name');
+const inputBio = document.querySelector('.popup__input_bio');
+const popupClose = document.querySelector('.popup__exit');
+const form = document.querySelector('.popup__form-to-submit');
 
-function popupOpen() {  
+//открытие/закрытие
+
+function popupToggle() {  
   inputName.value = name.textContent;
   inputBio.value = bio.textContent;
   popup.classList.toggle('popup_visible');
 }
 
-function popupSubmit() {
+//отправка
+
+function popupSubmit(evt) {
+  evt.preventDefault();
   popup.classList.toggle('popup_visible');
   name.textContent = inputName.value;
   bio.textContent = inputBio.value;
 }
 
-function popupExit() {   
-  popup.classList.toggle('popup_visible');   
-}
-
-editProfile.addEventListener('click', popupOpen);
-popupClose.addEventListener('click', popupExit);
-popupSave.addEventListener('click', popupSubmit);
+editProfile.addEventListener('click', popupToggle);
+popupClose.addEventListener('click', popupToggle);
+form.addEventListener('submit', popupSubmit);
