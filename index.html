@@ -90,17 +90,19 @@
   <!-- POPUP -->
 
   <div class="popup">
-    <div class="popup__form">
-    <form class="popup__form-to-submit">
-    <fieldset class="popup__input-container">
-      <p class="popup__title">Редактировать профиль</p>
-      <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
-      <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
-      <input value="Сохранить" type="submit" class="popup__save">
-    </fieldset>
-    </form>
+    <div class="popup__form-with-cross">      
+      <button class="popup__exit"></button>
+      <div class="popup__form">
+      <form class="popup__form-to-submit">
+      <fieldset class="popup__input-container">
+       <p class="popup__title">Редактировать профиль</p>
+       <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
+       <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
+        <input value="Сохранить" type="submit" class="popup__save">
+      </fieldset>
+     </form>
+      </div>
     </div>
-    <button class="popup__exit"></button>
   </div>
 
   <script src="./js.js"></script>
