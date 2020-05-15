@@ -12,7 +12,7 @@
 
   <section class="header">
     <a href="#"><img src="./images/logo.svg" alt="Логотип Место" class="header__logo"></a>
-    <hr color="#545454" size="1" class="header__line" />
+    <hr class="header__line" />
   </section>
 
   <!-- PROFILE -->
@@ -21,10 +21,10 @@
     <img src="./images/avatar.jpg" alt="Ваш аватар" class="profile__avatar">
     <div class="profile__name-container">
       <h1 class="profile__name">Жак-Ив Кусто</h1>
-      <button class="profile__button profile__button_edit"></button> 
+      <button type="button" class="profile__button-edit"></button> 
     </div>
     <p class="profile__bio">Исследователь океана</p>                
-    <button class="profile__button profile__button_add"></button>
+    <button type="button" class="profile__button-add"></button>
   </section>
 
   <!-- ELEMENTS -->
@@ -34,7 +34,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">Карачаевскарачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
 
@@ -42,7 +42,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">Карачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
 
@@ -50,7 +50,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">КарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
 
@@ -58,7 +58,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">Карачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
 
@@ -66,7 +66,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">Карачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
 
@@ -74,7 +74,7 @@
       <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
       <div class="elements__container">
         <p class="elements__title">Карачаевск</p>
-        <button class="elements__like"></button>
+        <button type="button" class="elements__like"></button>
       </div>  
     </div>
   </section>
@@ -92,16 +92,15 @@
   <div class="popup">
     <div class="popup__form-with-cross">      
       <button class="popup__exit"></button>
-      <div class="popup__form">
-      <form class="popup__form-to-submit">
-      <fieldset class="popup__input-container">
-       <p class="popup__title">Редактировать профиль</p>
-       <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
-       <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
-        <input value="Сохранить" type="submit" class="popup__save">
-      </fieldset>
-     </form>
-      </div>
+        <!-- action мне стоит пока пустым оставить? -->
+      <form method="post" action="" class="popup__form">
+        <fieldset class="popup__input-container">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
+          <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
+          <button type="submit" class="popup__save">Сохранить</button>
+        </fieldset>
+      </form>
     </div>
   </div>
 

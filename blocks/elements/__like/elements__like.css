@@ -3,4 +3,11 @@
   height: 18.13px;
   width: 20.76px;
   border: 0;
+  transition: ease-out .2s;
+  cursor: pointer;
+}
+
+.elements__like:hover{
+  opacity: .6;
+  transition: ease-in .2s;
 }
