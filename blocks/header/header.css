@@ -1,9 +1,9 @@
-@import url(./__line/header__line.css);
 @import url(./__logo/header__logo.css);
 
 .header {
   margin: 45px auto 0 auto;
   max-width: 882px;
+  border-bottom: 1px solid #545454;
 }
 
 @media screen and (max-width: 882px) {
