@@ -4,6 +4,9 @@
   font-size: 18px;
   line-height: 22px;
   margin: 0;
+  white-space:nowrap;  
+  overflow: hidden;
+  text-overflow: ellipsis;
   grid-area: bio;
   padding-left: calc((168px - 120px) / 2 - 14px);
 }

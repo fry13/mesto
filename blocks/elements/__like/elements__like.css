@@ -11,3 +11,7 @@
   opacity: .6;
   transition: ease-in .2s;
 }
+
+.elements__like:focus {    
+  outline: none;
+}

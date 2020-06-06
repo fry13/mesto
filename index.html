@@ -29,53 +29,19 @@
   <!-- ELEMENTS -->
 
   <section class="elements">
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">Карачаевскарачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
+    
 
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
 
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">КарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевскКарачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
+    <template id="card-template">
+      <div class="elements__card">
+        <img src="" alt="" class="elements__photo">
+        <div class="elements__container">
+          <p class="elements__title"></p>
+          <button type="button" class="elements__like"></button>
+        </div>  
+      </div>
+    </template>
 
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
-
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
-
-    <div class="elements__card">
-      <img src="./images/elements/kirill-pershin-1088404-unsplash.jpg" alt="" class="elements__photo">
-      <div class="elements__container">
-        <p class="elements__title">Карачаевск</p>
-        <button type="button" class="elements__like"></button>
-      </div>  
-    </div>
   </section>
 
   <!-- FOOTER -->
@@ -93,9 +59,9 @@
       <button type="button" class="popup__exit"></button>
       <form method="post" action="#" class="popup__form">
         <fieldset class="popup__input-container">
-          <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" required placeholder="Введите Ваше имя" maxlength="30" class="popup__input popup__input_name">
-          <input type="text" placeholder="Расскажите о себе" class="popup__input popup__input_bio">
+          <h2 class="popup__title"></h2>
+          <input type="text" required maxlength="30" class="popup__input popup__input_name">
+          <input type="text" class="popup__input popup__input_bio">
           <button type="submit" class="popup__save">Сохранить</button>
         </fieldset>
       </form>

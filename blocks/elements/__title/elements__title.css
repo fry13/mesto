@@ -1,6 +1,7 @@
 .elements__title {
   display: inline-block;
-  max-width: 225px;
+  max-width: 225px;  
+  white-space:nowrap;  
   overflow: hidden;
   text-overflow: ellipsis;
   font-style: normal;
@@ -8,4 +9,4 @@
   font-size: 24px;
   line-height: 29px;
   margin: 0;
-}
+} 
