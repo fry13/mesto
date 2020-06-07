@@ -12,7 +12,7 @@ let inputSecond = document.querySelector('.popup__input_bio');
 
 const cardContainer = document.querySelector('.elements');
 let card = document.querySelector('.elements__card');
-
+const cardTemplate = document.querySelector('#card-template').content; 
 let popupTitle = popup.querySelector('.popup__title');
 
 const initialCards = [
@@ -45,29 +45,28 @@ const initialCards = [
 
 //открытие/закрытие
 
-//function popupToggle() {  
-//  if (!popup.classList.contains('popup_visible')) {
-//    inputName.value = name.textContent;                
-//    inputBio.value = bio.textContent;    
-// } 
-//    popup.classList.toggle('popup_visible');
-//};
-
-
 function popupToggle (button) {
   if (popup.classList.contains('popup_visible')) { 
     popup.classList.toggle('popup_visible');
   } else {
-    if (button.target.classList.contains('profile__button-edit')) {
+    if (button.target === editProfile) {
       popupEdit (); 
-    } else if (button.target.classList.contains('profile__button-add')) {
-      popupAdd();
-    }      
-    popup.classList.add('popup_visible');
+    } else {
+      if (button.target === addPhoto) {
+        popupAdd();
+      } else {
+        if (button.target === card.querySelector('.elements__photo')) {
+          popupPhoto();
+        }}}
+    popup.classList.toggle('popup_visible');
   }
 }
 
+
+// редактирование био
+
 function popupEdit() {
+  form.classList.remove('popup__form_hidden');
   popupTitle.textContent = 'Редактировать профиль';
   inputFirst.placeholder = 'Введите Ваше имя';
   inputSecond.placeholder = 'Расскажите о себе';
@@ -75,7 +74,10 @@ function popupEdit() {
   inputSecond.value = bio.textContent;
 }
 
+//добавление фотокарточки
+
 function popupAdd() {
+  form.classList.remove('popup__form_hidden');
   popupTitle.textContent = 'Новое место';
   inputFirst.placeholder = 'Название';
   inputSecond.placeholder = 'Ссылка на картинку';  
@@ -83,45 +85,63 @@ function popupAdd() {
   inputSecond.value = '';
 }
 
+//просмотр фото
 
-//отправка
+function popupPhoto() {
+  console.log('gg');
+  form.classList.add('popup__form_hidden');
+}
 
-function popupSubmit(evt) {                              //
-  evt.preventDefault();                                  //
-  name.textContent = inputFirst.value;                   //перезаписываем имя и био используя
-  bio.textContent = inputSecond.value;                   //значения из инпутов
-  popupToggle();                                         //вызываем фунцию открытия/закрытия
+//отправка формы
+
+function popupSubmit(evt) {
+  evt.preventDefault();
+  if (popupTitle.textContent === 'Редактировать профиль') {
+    name.textContent = inputFirst.value;
+    bio.textContent = inputSecond.value;
+  } else if (popupTitle.textContent === 'Новое место') {   
+    card = cardTemplate.cloneNode(true);        
+
+    const like = card.querySelector('.elements__like');
+    like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
+    
+    const bin = card.querySelector('.elements__trash-bin');
+    bin.addEventListener('click', () => bin.parentElement.remove());
+
+    const photo = card.querySelector('.elements__photo');
+    photo.addEventListener('click', popupPhoto);
+
+    card.querySelector('.elements__title').textContent = inputFirst.value;
+    photo.src = inputSecond.value;
+    photo.alt = 'Фотокарточка ' + inputFirst.value; 
+    cardContainer.prepend(card);       
+  }
+  popupToggle();
 }
 
 
 // стандартные карточки
 
-initialCards.forEach(function (i) {  
-  const cardTemplate = document.querySelector('#card-template').content;                  // ищем шаблон
-  card = cardTemplate.cloneNode(true);                                                    // клонируем его
+initialCards.forEach(function (i) {              
+  card = cardTemplate.cloneNode(true);                                                    // клонируем шаблон
   
   const like = card.querySelector('.elements__like');
   like.addEventListener('click', () => like.classList.toggle('elements__like_active'));   // реализуем лайки
   
+  const bin = card.querySelector('.elements__trash-bin');
+  bin.addEventListener('click', () => bin.parentElement.remove());
+
+  const photo = card.querySelector('.elements__photo');
+  photo.addEventListener('click', popupPhoto);
+
   card.querySelector('.elements__title').textContent = i.name;                            // берем имя
-  card.querySelector('.elements__photo').src = i.link;                                    // и фото из массива
-  card.querySelector('.elements__photo').alt = 'Фотокарточка ' + i.name; 
+  photo.src = i.link;                                    // и фото из массива
+  photo.alt = 'Фотокарточка ' + i.name; 
   cardContainer.append(card);                                                             // добавляем в начало корнтейнера
 });
-
-//function addCard(link, name) {
- // const cardTemplate = document.querySelector('#card-template').content;
-  //card = cardTemplate.cloneNode(true);};
-
- // card.querySelector('.elements__title').textContent = cardName;
- // card.querySelector('.elements__photo')  //назначить фото из ссылки
- // cardContainer.append(card);
-
 
 
 editProfile.addEventListener('click', popupToggle);
 addPhoto.addEventListener('click', popupToggle);
 popupClose.addEventListener('click', popupToggle);
 form.addEventListener('submit', popupSubmit);
-
-
