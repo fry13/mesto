@@ -14,3 +14,7 @@
   transform: rotate(90deg);
   transition: ease-in .2s;
 }
+
+.popup__exit:focus {
+  outline: none;
+}
