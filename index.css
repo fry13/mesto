@@ -9,3 +9,7 @@
 @import url(./blocks/popup/_visisble/popup_visible.css);
 @import url(./blocks/elements/__like/_active/elements__like_active.css);
 @import url(./blocks/popup/__form/_hidden/popup__form_hidden.css);
+@import url(./blocks/popup/__form-with-cross/_for-photo/popup__form-with-cross_for-photo.css);
+@import url(./blocks/popup/__photo/_visible/popup__photo_visible.css);
+@import url(./blocks/popup/_for-photo/popup_for-photo.css);
+@import url(./blocks/popup/__photo-title/_visible/popup__photo-title_visible.css);

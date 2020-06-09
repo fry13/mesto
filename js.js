@@ -46,19 +46,21 @@ const initialCards = [
 //открытие/закрытие
 
 function popupToggle (button) {
-  if (popup.classList.contains('popup_visible')) { 
-    popup.classList.toggle('popup_visible');
-  } else {
-    if (button.target === editProfile) {
-      popupEdit (); 
-    } else {
-      if (button.target === addPhoto) {
-        popupAdd();
-      } else {
-        if (button.target === card.querySelector('.elements__photo')) {
-          popupPhoto();
-        }}}
-    popup.classList.toggle('popup_visible');
+  if (popup.classList.contains('popup_visible')) {                           // если открыт,
+    popup.classList.toggle('popup_visible');                                 // закрыть.
+  } else {                                                                   // иначе,
+      if (button.target === editProfile) {                                   // если тыкаем на карандаш, то
+        popupEdit ();                                                        // вызываем редактирование био.
+      } else {                                                               // инчае,
+          if (button.target === addPhoto) {                                  // если тыкаем на плюс, то 
+            popupAdd();                                                      // вызывавем добавление фото.
+          } else {                                                           // иначе,
+            if (button.target.classList.contains('elements__photo')) {       // если тыкаем на фото, то
+              popupPhoto(button);                                            // вызываем полноразмерное фото.
+            }
+          }
+      }
+    popup.classList.toggle('popup_visible');                                 // открываем попап
   }
 }
 
@@ -66,57 +68,71 @@ function popupToggle (button) {
 // редактирование био
 
 function popupEdit() {
-  form.classList.remove('popup__form_hidden');
-  popupTitle.textContent = 'Редактировать профиль';
+  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo'); // готовим форму.
+  document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                       //
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                   // убираем увеличенное фото.
+  document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');           // убираем подпись под увеличенным фото.
+  form.classList.remove('popup__form_hidden');                                                            // показываем форму.
+  popupTitle.textContent = 'Редактировать профиль';                                                       // изменяем надписи на форме
   inputFirst.placeholder = 'Введите Ваше имя';
   inputSecond.placeholder = 'Расскажите о себе';
-  inputFirst.value = name.textContent;                
+  inputFirst.value = name.textContent;                                                                     // заполняем инпуты из био
   inputSecond.value = bio.textContent;
 }
 
 //добавление фотокарточки
 
 function popupAdd() {
-  form.classList.remove('popup__form_hidden');
-  popupTitle.textContent = 'Новое место';
+  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo');  // готовим форму
+  document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                        // 
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                    // убираем увеличенное фото.
+  document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');            // убираем подпись под увеличенным фото.
+  form.classList.remove('popup__form_hidden');                                                             // показываем форму.
+  popupTitle.textContent = 'Новое место';                                                                  // изменяем надписи на форме
   inputFirst.placeholder = 'Название';
   inputSecond.placeholder = 'Ссылка на картинку';  
-  inputFirst.value = '';                
+  inputFirst.value = '';                                                                                   // очищаем инпуты
   inputSecond.value = '';
 }
 
 //просмотр фото
 
-function popupPhoto() {
-  console.log('gg');
-  form.classList.add('popup__form_hidden');
+function popupPhoto(button) {
+  form.classList.add('popup__form_hidden');                                                                 // прячем форму
+  document.querySelector('.popup__form-with-cross').classList.add('popup__form-with-cross_for-photo');      // готовим попап  
+  document.querySelector('.popup').classList.add('popup_for-photo');   
+  document.querySelector('.popup__photo').src = button.target.src;                                          // берем адрес и alt из таргета
+  document.querySelector('.popup__photo').alt = button.target.alt;
+  document.querySelector('.popup__photo-title').textContent = button.target.alt;                            // подписываем фото                                     
+  document.querySelector('.popup__photo').classList.add('popup__photo_visible');                            // показываем фото
+  document.querySelector('.popup__photo-title').classList.add('popup__photo-title_visible');                // показываем подпись
 }
 
 //отправка формы
 
 function popupSubmit(evt) {
   evt.preventDefault();
-  if (popupTitle.textContent === 'Редактировать профиль') {
-    name.textContent = inputFirst.value;
+  if (popupTitle.textContent === 'Редактировать профиль') {                                 // если редактируем био, то
+    name.textContent = inputFirst.value;                                                    // забираем био из инпутов
     bio.textContent = inputSecond.value;
-  } else if (popupTitle.textContent === 'Новое место') {   
-    card = cardTemplate.cloneNode(true);        
+  } else if (popupTitle.textContent === 'Новое место') {                                    // иначе, если добавляем карточку, то
+    card = cardTemplate.cloneNode(true);                                                    // копируем шаблон
 
-    const like = card.querySelector('.elements__like');
+    const like = card.querySelector('.elements__like');                                     // реализуем лайки
     like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
     
     const bin = card.querySelector('.elements__trash-bin');
-    bin.addEventListener('click', () => bin.parentElement.remove());
+    bin.addEventListener('click', () => bin.parentElement.remove());                         // реализуем удаление
 
     const photo = card.querySelector('.elements__photo');
-    photo.addEventListener('click', popupPhoto);
+    photo.addEventListener('click', popupToggle);                                            // вешаем слушатель на фото, чтобы увеличивать
 
-    card.querySelector('.elements__title').textContent = inputFirst.value;
-    photo.src = inputSecond.value;
-    photo.alt = 'Фотокарточка ' + inputFirst.value; 
-    cardContainer.prepend(card);       
+    card.querySelector('.elements__title').textContent = inputFirst.value;                   // берем имя из первого инпута,
+    photo.src = inputSecond.value;                                                           // фото из второго,
+    photo.alt = inputFirst.value;                                                            // и записываем имя в alt
+    cardContainer.prepend(card);                                                             // добавляем в начало контейнера
   }
-  popupToggle();
+  popupToggle();                                                                             // прячем попап
 }
 
 
@@ -129,14 +145,15 @@ initialCards.forEach(function (i) {
   like.addEventListener('click', () => like.classList.toggle('elements__like_active'));   // реализуем лайки
   
   const bin = card.querySelector('.elements__trash-bin');
-  bin.addEventListener('click', () => bin.parentElement.remove());
+  bin.addEventListener('click', () => bin.parentElement.remove());                        // реализуем удаление
 
   const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', popupPhoto);
+  photo.addEventListener('click', popupToggle);                                           // вешаем слушатель на фото, чтобы его увеличивать
 
-  card.querySelector('.elements__title').textContent = i.name;                            // берем имя
-  photo.src = i.link;                                    // и фото из массива
-  photo.alt = 'Фотокарточка ' + i.name; 
+  card.querySelector('.elements__title').textContent = i.name;                            // берем имя,
+  photo.src = i.link;                                                                     // фото,
+  photo.alt = i.name;                                                                     // и записываем имя в alt
+  
   cardContainer.append(card);                                                             // добавляем в начало корнтейнера
 });
 
