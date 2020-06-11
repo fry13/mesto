@@ -1,19 +1,22 @@
 const popup = document.querySelector('.popup');
 const popupClose = document.querySelector('.popup__exit');
-const form = document.querySelector('.popup__form');
+const bioForm = document.forms.bio;
+const photoForm = document.forms.addPhoto;
 
 const editProfile = document.querySelector('.profile__button-edit');
 const addPhoto = document.querySelector('.profile__button-add');
 
-let name = document.querySelector('.profile__name');
-let bio = document.querySelector('.profile__bio');
-let inputFirst = document.querySelector('.popup__input_name');
-let inputSecond = document.querySelector('.popup__input_bio');
+const name = document.querySelector('.profile__name');
+const bio = document.querySelector('.profile__bio');
+
+const inputName = document.querySelector('.popup__input_name');
+const inputBio = document.querySelector('.popup__input_bio');
+const inputTitle = document.querySelector('.popup__input_title');
+const inputLink = document.querySelector('.popup__input_link');
 
 const cardContainer = document.querySelector('.elements');
 let card = document.querySelector('.elements__card');
 const cardTemplate = document.querySelector('#card-template').content; 
-let popupTitle = popup.querySelector('.popup__title');
 
 const initialCards = [
   {
@@ -43,62 +46,40 @@ const initialCards = [
 ];
 
 
-//открытие/закрытие
-
-function popupToggle (button) {
-  if (popup.classList.contains('popup_visible')) {                           // если открыт,
-    popup.classList.toggle('popup_visible');                                 // закрыть.
-  } else {                                                                   // иначе,
-      if (button.target === editProfile) {                                   // если тыкаем на карандаш, то
-        popupEdit ();                                                        // вызываем редактирование био.
-      } else {                                                               // инчае,
-          if (button.target === addPhoto) {                                  // если тыкаем на плюс, то 
-            popupAdd();                                                      // вызывавем добавление фото.
-          } else {                                                           // иначе,
-            if (button.target.classList.contains('elements__photo')) {       // если тыкаем на фото, то
-              popupPhoto(button);                                            // вызываем полноразмерное фото.
-            }
-          }
-      }
-    popup.classList.toggle('popup_visible');                                 // открываем попап
-  }
-}
-
 
 // редактирование био
 
-function popupEdit() {
-  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo'); // готовим форму.
+function popupEdit(button) {
+  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo'); // прячем из попапа фото.
   document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                       //
-  document.querySelector('.popup').classList.remove('popup_for-photo');                                   // убираем увеличенное фото.
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                   // 
   document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');           // убираем подпись под увеличенным фото.
-  form.classList.remove('popup__form_hidden');                                                            // показываем форму.
-  popupTitle.textContent = 'Редактировать профиль';                                                       // изменяем надписи на форме
-  inputFirst.placeholder = 'Введите Ваше имя';
-  inputSecond.placeholder = 'Расскажите о себе';
-  inputFirst.value = name.textContent;                                                                     // заполняем инпуты из био
-  inputSecond.value = bio.textContent;
+  bioForm.classList.remove('popup__form_hidden');                                                         // прячем форму для добавления фотокарточек.
+  photoForm.classList.add('popup__form_hidden');                                                          // показываем форму для редактирования биографии
+  inputName.value = name.textContent;                                                                     // заполняем инпуты из био
+  inputBio.value = bio.textContent;
+  popup.classList.add('popup_visible');                                                                    // показываем попап
 }
 
 //добавление фотокарточки
 
-function popupAdd() {
-  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo');  // готовим форму
+function popupAdd(button) {
+  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo');  // прячем из попапа фото.
   document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                        // 
-  document.querySelector('.popup').classList.remove('popup_for-photo');                                    // убираем увеличенное фото.
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                    // 
   document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');            // убираем подпись под увеличенным фото.
-  form.classList.remove('popup__form_hidden');                                                             // показываем форму.
-  popupTitle.textContent = 'Новое место';                                                                  // изменяем надписи на форме
-  inputFirst.placeholder = 'Название';
-  inputSecond.placeholder = 'Ссылка на картинку';  
-  inputFirst.value = '';                                                                                   // очищаем инпуты
-  inputSecond.value = '';
+  photoForm.classList.remove('popup__form_hidden');                                                        // прячем форму для редактирования биографии.
+  bioForm.classList.add('popup__form_hidden');                                                             // показываем форму для добавления карточек.
+  inputTitle.value = '';                                                                                   // очищаем инпуты
+  inputLink.value = '';
+  popup.classList.add('popup_visible');                                                                    // показываем попап
 }
 
 //просмотр фото
 
 function popupPhoto(button) {
-  form.classList.add('popup__form_hidden');                                                                 // прячем форму
+  photoForm.classList.add('popup__form_hidden');                                                             // прячем формы редактирования био и добавления карточек.
+  bioForm.classList.add('popup__form_hidden');
   document.querySelector('.popup__form-with-cross').classList.add('popup__form-with-cross_for-photo');      // готовим попап  
   document.querySelector('.popup').classList.add('popup_for-photo');   
   document.querySelector('.popup__photo').src = button.target.src;                                          // берем адрес и alt из таргета
@@ -106,33 +87,36 @@ function popupPhoto(button) {
   document.querySelector('.popup__photo-title').textContent = button.target.alt;                            // подписываем фото                                     
   document.querySelector('.popup__photo').classList.add('popup__photo_visible');                            // показываем фото
   document.querySelector('.popup__photo-title').classList.add('popup__photo-title_visible');                // показываем подпись
+  popup.classList.add('popup_visible');                                                                     // показываем попап
 }
 
-//отправка формы
+//отправка форм
 
-function popupSubmit(evt) {
+function bioSubmit(evt) {
   evt.preventDefault();
-  if (popupTitle.textContent === 'Редактировать профиль') {                                 // если редактируем био, то
-    name.textContent = inputFirst.value;                                                    // забираем био из инпутов
-    bio.textContent = inputSecond.value;
-  } else if (popupTitle.textContent === 'Новое место') {                                    // иначе, если добавляем карточку, то
-    card = cardTemplate.cloneNode(true);                                                    // копируем шаблон
+  name.textContent = inputName.value;                                                    // забираем био из инпутов
+  bio.textContent = inputBio.value;
+  popup.classList.remove('popup_visible');                                               // прячем попап
+} 
 
-    const like = card.querySelector('.elements__like');                                     // реализуем лайки
-    like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
+function photoSubmit(evt) {   
+  evt.preventDefault();
+  card = cardTemplate.cloneNode(true);                                                    // копируем шаблон
+
+  const like = card.querySelector('.elements__like');                                     // реализуем лайки
+  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
     
-    const bin = card.querySelector('.elements__trash-bin');
-    bin.addEventListener('click', () => bin.parentElement.remove());                         // реализуем удаление
+  const bin = card.querySelector('.elements__trash-bin');
+  bin.addEventListener('click', () => bin.parentElement.remove());                         // реализуем удаление
 
-    const photo = card.querySelector('.elements__photo');
-    photo.addEventListener('click', popupToggle);                                            // вешаем слушатель на фото, чтобы увеличивать
+  const photo = card.querySelector('.elements__photo');
+  photo.addEventListener('click', popupPhoto);                                            // вешаем слушатель на фото, чтобы увеличивать
 
-    card.querySelector('.elements__title').textContent = inputFirst.value;                   // берем имя из первого инпута,
-    photo.src = inputSecond.value;                                                           // фото из второго,
-    photo.alt = inputFirst.value;                                                            // и записываем имя в alt
-    cardContainer.prepend(card);                                                             // добавляем в начало контейнера
-  }
-  popupToggle();                                                                             // прячем попап
+  card.querySelector('.elements__title').textContent = inputTitle.value;                   // берем имя из первого инпута,
+  photo.src = inputTitle.value;                                                           // фото из второго,
+  photo.alt = inputLink.value;                                                            // и записываем имя в alt
+  cardContainer.prepend(card);                                                             // добавляем в начало контейнера
+  popup.classList.remove('popup_visible');                                                   // прячем попап
 }
 
 
@@ -148,7 +132,7 @@ initialCards.forEach(function (i) {
   bin.addEventListener('click', () => bin.parentElement.remove());                        // реализуем удаление
 
   const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', popupToggle);                                           // вешаем слушатель на фото, чтобы его увеличивать
+  photo.addEventListener('click', popupPhoto);                                           // вешаем слушатель на фото, чтобы его увеличивать
 
   card.querySelector('.elements__title').textContent = i.name;                            // берем имя,
   photo.src = i.link;                                                                     // фото,
@@ -158,7 +142,17 @@ initialCards.forEach(function (i) {
 });
 
 
-editProfile.addEventListener('click', popupToggle);
-addPhoto.addEventListener('click', popupToggle);
-popupClose.addEventListener('click', popupToggle);
-form.addEventListener('submit', popupSubmit);
+editProfile.addEventListener('click', popupEdit);
+addPhoto.addEventListener('click', popupAdd);
+popupClose.addEventListener('click', () => {popup.classList.remove('popup_visible')});
+bioForm.addEventListener('submit', bioSubmit);
+photoForm.addEventListener('submit', photoSubmit)
+
+// закрытие по клику мимо попапа
+
+popup.addEventListener('click', (evt) => {
+  if (evt.target.classList.contains('popup')) {
+    evt.stopImmediatePropagation();
+    popup.classList.remove('popup_visible');
+  }  
+});
