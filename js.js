@@ -18,6 +18,7 @@ const cardContainer = document.querySelector('.elements');
 let card = document.querySelector('.elements__card');
 const cardTemplate = document.querySelector('#card-template').content; 
 
+
 const initialCards = [
   {
       name: 'Архыз',
@@ -49,7 +50,7 @@ const initialCards = [
 
 // редактирование био
 
-function popupEdit(button) {
+function popupEdit() {
   document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo'); // прячем из попапа фото.
   document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                       //
   document.querySelector('.popup').classList.remove('popup_for-photo');                                   // 
@@ -63,7 +64,7 @@ function popupEdit(button) {
 
 //добавление фотокарточки
 
-function popupAdd(button) {
+function popupAdd() {
   document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo');  // прячем из попапа фото.
   document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                        // 
   document.querySelector('.popup').classList.remove('popup_for-photo');                                    // 
@@ -90,39 +91,9 @@ function popupPhoto(button) {
   popup.classList.add('popup_visible');                                                                     // показываем попап
 }
 
-//отправка форм
+// создание фотокарточки
 
-function bioSubmit(evt) {
-  evt.preventDefault();
-  name.textContent = inputName.value;                                                    // забираем био из инпутов
-  bio.textContent = inputBio.value;
-  popup.classList.remove('popup_visible');                                               // прячем попап
-} 
-
-function photoSubmit(evt) {   
-  evt.preventDefault();
-  card = cardTemplate.cloneNode(true);                                                    // копируем шаблон
-
-  const like = card.querySelector('.elements__like');                                     // реализуем лайки
-  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
-    
-  const bin = card.querySelector('.elements__trash-bin');
-  bin.addEventListener('click', () => bin.parentElement.remove());                         // реализуем удаление
-
-  const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', popupPhoto);                                            // вешаем слушатель на фото, чтобы увеличивать
-
-  card.querySelector('.elements__title').textContent = inputTitle.value;                   // берем имя из первого инпута,
-  photo.src = inputTitle.value;                                                           // фото из второго,
-  photo.alt = inputLink.value;                                                            // и записываем имя в alt
-  cardContainer.prepend(card);                                                             // добавляем в начало контейнера
-  popup.classList.remove('popup_visible');                                                   // прячем попап
-}
-
-
-// стандартные карточки
-
-initialCards.forEach(function (i) {              
+function cardCreate () {              
   card = cardTemplate.cloneNode(true);                                                    // клонируем шаблон
   
   const like = card.querySelector('.elements__like');
@@ -132,21 +103,38 @@ initialCards.forEach(function (i) {
   bin.addEventListener('click', () => bin.parentElement.remove());                        // реализуем удаление
 
   const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', popupPhoto);                                           // вешаем слушатель на фото, чтобы его увеличивать
+  photo.addEventListener('click', popupPhoto);     
+};
 
+initialCards.forEach(function (i) {
+  cardCreate();
   card.querySelector('.elements__title').textContent = i.name;                            // берем имя,
-  photo.src = i.link;                                                                     // фото,
-  photo.alt = i.name;                                                                     // и записываем имя в alt
-  
-  cardContainer.append(card);                                                             // добавляем в начало корнтейнера
+  card.querySelector('.elements__photo').src = i.link;                                                                     // фото,
+  card.querySelector('.elements__photo').alt = i.name;                                                                     // и записываем имя в alt
+  cardContainer.append(card);          
 });
 
 
 editProfile.addEventListener('click', popupEdit);
 addPhoto.addEventListener('click', popupAdd);
 popupClose.addEventListener('click', () => {popup.classList.remove('popup_visible')});
-bioForm.addEventListener('submit', bioSubmit);
-photoForm.addEventListener('submit', photoSubmit)
+
+bioForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  name.textContent = inputName.value;                                                    // забираем био из инпутов
+  bio.textContent = inputBio.value;
+  popup.classList.remove('popup_visible');     
+});
+
+photoForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  cardCreate();
+  card.querySelector('.elements__title').textContent = inputTitle.value;                   // берем имя из первого инпута,
+  card.querySelector('.elements__photo').src = inputLink.value;                                                           // фото из второго,
+  card.querySelector('.elements__photo').alt = inputTitle.value;                                                            // и записываем имя в alt
+  cardContainer.prepend(card);                                                             // добавляем в начало контейнера
+  popup.classList.remove('popup_visible');
+})
 
 // закрытие по клику мимо попапа
 
@@ -155,4 +143,12 @@ popup.addEventListener('click', (evt) => {
     evt.stopImmediatePropagation();
     popup.classList.remove('popup_visible');
   }  
+});
+
+// закрытие по Esc
+
+document.addEventListener('keyup', function(evt) {
+  if (evt.key === 'Escape') {
+    popup.classList.remove('popup_visible');
+  }
 });
