@@ -51,90 +51,98 @@ const initialCards = [
 // редактирование био
 
 function popupEdit() {
-  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo'); // прячем из попапа фото.
-  document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                       //
-  document.querySelector('.popup').classList.remove('popup_for-photo');                                   // 
-  document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');           // убираем подпись под увеличенным фото.
-  bioForm.classList.remove('popup__form_hidden');                                                         // прячем форму для добавления фотокарточек.
-  photoForm.classList.add('popup__form_hidden');                                                          // показываем форму для редактирования биографии
-  inputName.value = name.textContent;                                                                     // заполняем инпуты из био
+  document.querySelector('.popup__form-with-cross_for-form').classList.remove('popup__form-with-cross_hidden'); // показываем контейнер формы
+  document.querySelector('.popup__form-with-cross_for-photo').classList.add('popup__form-with-cross_hidden');   // cкрываем контейнер фото
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                         // уменьшаем затенение оверлея
+  bioForm.classList.remove('popup__form_hidden');                                                               // прячем форму добавления фотокарточек.
+  photoForm.classList.add('popup__form_hidden');                                                                // показываем форму для редактирования биографии
+  inputName.value = name.textContent;                                                                           // заполняем инпуты из био
   inputBio.value = bio.textContent;
-  popup.classList.add('popup_visible');                                                                    // показываем попап
+  popup.classList.add('popup_visible');                                                                         // показываем попап
 }
 
 //добавление фотокарточки
 
 function popupAdd() {
-  document.querySelector('.popup__form-with-cross').classList.remove('popup__form-with-cross_for-photo');  // прячем из попапа фото.
-  document.querySelector('.popup__photo').classList.remove('popup__photo_visible');                        // 
-  document.querySelector('.popup').classList.remove('popup_for-photo');                                    // 
-  document.querySelector('.popup__photo-title').classList.remove('popup__photo-title_visible');            // убираем подпись под увеличенным фото.
-  photoForm.classList.remove('popup__form_hidden');                                                        // прячем форму для редактирования биографии.
-  bioForm.classList.add('popup__form_hidden');                                                             // показываем форму для добавления карточек.
-  inputTitle.value = '';                                                                                   // очищаем инпуты
+  document.querySelector('.popup__form-with-cross_for-form').classList.remove('popup__form-with-cross_hidden'); // показываем контейнер формы
+  document.querySelector('.popup__form-with-cross_for-photo').classList.add('popup__form-with-cross_hidden');   // cкрываем контейнер фото
+  document.querySelector('.popup').classList.remove('popup_for-photo');                                         // уменьшаем затенение оверлея
+  photoForm.classList.remove('popup__form_hidden');                                                             // прячем форму редактирования биографии.
+  bioForm.classList.add('popup__form_hidden');                                                                  // показываем форму для добавления карточек.
+  inputTitle.value = '';                                                                                        // очищаем инпуты
   inputLink.value = '';
-  popup.classList.add('popup_visible');                                                                    // показываем попап
+  popup.classList.add('popup_visible');                                                                         // показываем попап
 }
 
 //просмотр фото
 
 function popupPhoto(button) {
-  photoForm.classList.add('popup__form_hidden');                                                             // прячем формы редактирования био и добавления карточек.
-  bioForm.classList.add('popup__form_hidden');
-  document.querySelector('.popup__form-with-cross').classList.add('popup__form-with-cross_for-photo');      // готовим попап  
-  document.querySelector('.popup').classList.add('popup_for-photo');   
-  document.querySelector('.popup__photo').src = button.target.src;                                          // берем адрес и alt из таргета
+  document.querySelector('.popup__form-with-cross_for-form').classList.add('popup__form-with-cross_hidden');     // скрываем контейнер формы
+  document.querySelector('.popup__form-with-cross_for-photo').classList.remove('popup__form-with-cross_hidden'); // показываем контейнер фото
+  document.querySelector('.popup').classList.add('popup_for-photo');                                             // увеличиваем затенение оверлея
+  document.querySelector('.popup__photo').src = button.target.src;                                               // берем адрес и alt из таргета
   document.querySelector('.popup__photo').alt = button.target.alt;
-  document.querySelector('.popup__photo-title').textContent = button.target.alt;                            // подписываем фото                                     
-  document.querySelector('.popup__photo').classList.add('popup__photo_visible');                            // показываем фото
-  document.querySelector('.popup__photo-title').classList.add('popup__photo-title_visible');                // показываем подпись
-  popup.classList.add('popup_visible');                                                                     // показываем попап
+  document.querySelector('.popup__photo-title').textContent = button.target.alt;                                 // подписываем фото                                     
+  popup.classList.add('popup_visible');                                                                          // показываем попап
 }
 
 // создание фотокарточки
 
-function cardCreate () {              
-  card = cardTemplate.cloneNode(true);                                                    // клонируем шаблон
+function cardCreate (cardTitle, cardLink) {              
+  newCard = cardTemplate.cloneNode(true);                                                    // клонируем шаблон
   
-  const like = card.querySelector('.elements__like');
-  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));   // реализуем лайки
+  const like = newCard.querySelector('.elements__like');
+  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));      // реализуем лайки
   
-  const bin = card.querySelector('.elements__trash-bin');
-  bin.addEventListener('click', () => bin.parentElement.remove());                        // реализуем удаление
+  const bin = newCard.querySelector('.elements__trash-bin');
+  bin.addEventListener('click', () => bin.parentElement.remove());                           // реализуем удаление
 
-  const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', popupPhoto);     
+  const photo = newCard.querySelector('.elements__photo');
+  photo.addEventListener('click', popupPhoto);                                               // вешаем слушатель для увеличения фото
+  
+  return card = {                                                                            // создаем объект фотокарточки с именем и ссылкой
+    title: cardTitle,
+    link: cardLink,
+  }
 };
 
+
+// стандартные карточки
+
 initialCards.forEach(function (i) {
-  cardCreate();
-  card.querySelector('.elements__title').textContent = i.name;                            // берем имя,
-  card.querySelector('.elements__photo').src = i.link;                                                                     // фото,
-  card.querySelector('.elements__photo').alt = i.name;                                                                     // и записываем имя в alt
-  cardContainer.append(card);          
+  cardCreate(i.name, i.link);
+  newCard.querySelector('.elements__title').textContent = card.title;                            // берем имя из объекта
+  newCard.querySelector('.elements__photo').src = card.link;                                     // фото из объекта
+  newCard.querySelector('.elements__photo').alt = card.title;                                    // и записываем имя в alt
+  cardContainer.append(newCard);                                                                 // добавляем карточку
 });
 
 
 editProfile.addEventListener('click', popupEdit);
 addPhoto.addEventListener('click', popupAdd);
-popupClose.addEventListener('click', () => {popup.classList.remove('popup_visible')});
 
 bioForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  name.textContent = inputName.value;                                                    // забираем био из инпутов
+  name.textContent = inputName.value;
   bio.textContent = inputBio.value;
-  popup.classList.remove('popup_visible');     
+  popup.classList.remove('popup_visible');
 });
 
 photoForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  cardCreate();
-  card.querySelector('.elements__title').textContent = inputTitle.value;                   // берем имя из первого инпута,
-  card.querySelector('.elements__photo').src = inputLink.value;                                                           // фото из второго,
-  card.querySelector('.elements__photo').alt = inputTitle.value;                                                            // и записываем имя в alt
-  cardContainer.prepend(card);                                                             // добавляем в начало контейнера
+  cardCreate(inputTitle.value, inputLink.value);
+  newCard.querySelector('.elements__title').textContent = card.title;                   // берем имя из объекта,
+  newCard.querySelector('.elements__photo').src = card.link;                            // фото из объекта,
+  newCard.querySelector('.elements__photo').alt = card.title;                           // записываем имя в alt
+  cardContainer.prepend(newCard);                                                       // добавляем в начало контейнера
   popup.classList.remove('popup_visible');
 })
+
+// закрытие по крестику
+
+Array.from(document.querySelectorAll('.popup__exit')).forEach( (item) => {
+  item.addEventListener('click', () => {popup.classList.remove('popup_visible')})
+});
 
 // закрытие по клику мимо попапа
 

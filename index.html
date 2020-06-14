@@ -53,11 +53,8 @@
   <!-- POPUP -->
 
   <div class="popup">
-    <div class="popup__form-with-cross">       
+    <div class="popup__form-with-cross popup__form-with-cross_for-form">       
       <button type="button" class="popup__exit"></button>
-      
-      <img src="" alt="" class="popup__photo">
-      <h2 class="popup__photo-title"></h2> 
 
       <form name="bio" method="post" action="#" class="popup__form popup__form_hidden">
         <fieldset class="popup__input-container">
@@ -76,7 +73,16 @@
           <button type="submit" class="popup__save">Сохранить</button>
         </fieldset>
       </form>
-      
+    </div>
+<!-- я не до конца понял, что Вы имели ввиду под тремя попапами, у меня ведь и так было 
+две формы и отельно от них изображение, я открывал что-то одно по клику, изменял только 
+размер их общего контейнера, чтобы его для фото растянуть. я попытался исправить, как Вы
+сказали, но не уверен, что так лучше. если что-то не так, то, если Вам не трудно, объясните 
+поподробнее, что именно нужно сделать -->
+    <div class="popup__form-with-cross popup__form-with-cross_for-photo">       
+      <button type="button" class="popup__exit"></button>      
+      <img src="#" alt="" class="popup__photo">
+      <h2 class="popup__photo-title"></h2>
     </div>
   </div>
 
