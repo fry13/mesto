@@ -57,10 +57,13 @@ function popupEdit() {
   popup.classList.remove('popup_for-photo');                                                                    // уменьшаем затенение оверлея
   bioForm.classList.remove('popup__form_hidden');                                                               // прячем форму добавления фотокарточек.
   photoForm.classList.add('popup__form_hidden');                                                                // показываем форму для редактирования биографии
-  inputName.value = profileName.textContent;                                                                           // заполняем инпуты из био
+  inputName.value = profileName.textContent;                                                                    // заполняем инпуты из био
   inputBio.value = profileBio.textContent;        
   popup.classList.add('popup_visible');                                                                         // показываем попап
-  toggleButtonState(Array.from(bioForm.querySelectorAll('.popup__input')), bioForm.querySelector('.popup__save'));
+  const inputList = Array.from(bioForm.querySelectorAll('.popup__input'));
+  toggleButtonState(inputList, bioForm.querySelector('.popup__save'));
+  inputList.forEach((inputElement) => {
+  checkInputValidity(bioForm, inputElement);});
   escHandler();
 }
 
