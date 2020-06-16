@@ -22,7 +22,6 @@ const inputLink = document.querySelector('.popup__input_link');
 const cardContainer = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#card-template').content; 
 
-
 const initialCards = [
   {
       name: 'Архыз',
