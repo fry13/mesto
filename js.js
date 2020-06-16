@@ -61,8 +61,10 @@ function popupEdit() {
   bioForm.classList.remove('popup__form_hidden');                                                               // прячем форму добавления фотокарточек.
   photoForm.classList.add('popup__form_hidden');                                                                // показываем форму для редактирования биографии
   inputName.value = name.textContent;                                                                           // заполняем инпуты из био
-  inputBio.value = bio.textContent;
+  inputBio.value = bio.textContent;        
   popup.classList.add('popup_visible');                                                                         // показываем попап
+  toggleButtonState(Array.from(bioForm.querySelectorAll('.popup__input')), bioForm.querySelector('.popup__save'));
+  escHandler();
 }
 
 // просмотр фото
@@ -75,6 +77,7 @@ function popupPhoto(button) {
   maxPhoto.alt = button.target.alt;
   maxPhotoTitle.textContent = button.target.alt;                                                                // подписываем фото                                     
   popup.classList.add('popup_visible');                                                                         // показываем попап
+  escHandler();
 }
 
 // форма добавления фотокарточки
@@ -88,6 +91,7 @@ function popupAdd() {
   inputTitle.value = '';                                                                                        // очищаем инпуты
   inputLink.value = '';
   popup.classList.add('popup_visible');                                                                         // показываем попап
+  escHandler();
 }
 
 // создание фотокарточки
@@ -111,6 +115,16 @@ function cardCreate (cardTitle, cardLink) {
   return newCard;                                                                                               // возвращаем готовую карточку
 };
 
+// закрытие по Esc
+
+function escHandler() {  
+    document.addEventListener('keyup', function escPress(evt){
+    if (evt.key === 'Escape') {
+      popup.classList.remove('popup_visible');
+      document.removeEventListener('keyup', escPress);
+    }
+  });
+}
 
 // стандартные карточки
 
@@ -144,17 +158,10 @@ Array.from(document.querySelectorAll('.popup__exit')).forEach( (item) => {
 
 // закрытие по клику мимо попапа
 
-popup.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup')) {
+popup.addEventListener('mousedown', (evt) => {
+  if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__form-with-cross')) {
     evt.stopImmediatePropagation();
     popup.classList.remove('popup_visible');
   }  
 });
 
-// закрытие по Esc
-
-document.addEventListener('keyup', function(evt) {
-  if (evt.key === 'Escape') {
-    popup.classList.remove('popup_visible');
-  }
-});

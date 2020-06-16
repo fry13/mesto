@@ -12,3 +12,6 @@
 @import url(./blocks/popup/__form-with-cross/_for-photo/popup__form-with-cross_for-photo.css);
 @import url(./blocks/popup/_for-photo/popup_for-photo.css);
 @import url(./blocks/popup/__form-with-cross/_hidden/popup__form-with-cross_hidden.css);
+@import url(./blocks/popup/__save/_disabled/popup__save_disabled.css);
+@import url(./blocks/popup/__input/_error/popup__input_error.css);
+@import url(./blocks/popup/__error/_visible/popup__error_visible.css);

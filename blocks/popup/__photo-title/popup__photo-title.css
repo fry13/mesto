@@ -1,4 +1,5 @@
 .popup__photo-title {
+  display: inline;
   margin: 10px 0 0 0;
   color: white;
   font-size: 12px;
