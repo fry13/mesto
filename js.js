@@ -18,6 +18,7 @@ const inputName = document.querySelector('.popup__input_name');
 const inputBio = document.querySelector('.popup__input_bio');
 const inputTitle = document.querySelector('.popup__input_title');
 const inputLink = document.querySelector('.popup__input_link');
+const errorList = Array.from(document.querySelectorAll('.popup__error'));
 
 const cardContainer = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#card-template').content; 
@@ -62,8 +63,6 @@ function popupEdit() {
   popup.classList.add('popup_visible');                                                                         // показываем попап
   const inputList = Array.from(bioForm.querySelectorAll('.popup__input'));
   toggleButtonState(inputList, bioForm.querySelector('.popup__save'));
-  inputList.forEach((inputElement) => {
-  checkInputValidity(bioForm, inputElement);});
   escHandler();
 }
 
@@ -120,12 +119,22 @@ function addEventListeners (card) {
   photo.addEventListener('click', popupPhoto);                                                                  // слушатель для увеличения фото
 }
 
+
+// закрытие
+
+function popupClose() {  
+  errorList.forEach((errorElement) => {   
+    errorElement.classList.remove('popup__error_visible');
+  });
+  popup.classList.remove('popup_visible');
+}
+
 // закрытие по Esc
 
 function escHandler() {  
     document.addEventListener('keyup', function escPress(evt){
     if (evt.key === 'Escape') {
-      popup.classList.remove('popup_visible');
+      popupClose();
       document.removeEventListener('keyup', escPress);
     }
   });
@@ -158,7 +167,9 @@ photoForm.addEventListener('submit', (evt) => {
 // закрытие по крестику
 
 Array.from(document.querySelectorAll('.popup__exit')).forEach( (item) => {
-  item.addEventListener('click', () => {popup.classList.remove('popup_visible')})
+  item.addEventListener('click', () => {
+    popupClose();
+  })
 });
 
 // закрытие по клику мимо попапа
@@ -166,7 +177,7 @@ Array.from(document.querySelectorAll('.popup__exit')).forEach( (item) => {
 popup.addEventListener('mousedown', (evt) => {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__form-with-cross')) {
     evt.stopImmediatePropagation();
-    popup.classList.remove('popup_visible');
+    popupClose();
   }  
 });
 
