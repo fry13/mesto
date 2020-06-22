@@ -41,7 +41,7 @@ const setEventListeners = (formElement) => {
 
 // запуск проверки на валидацию
 
-function enableValidation() {
+function enableValidation(options) {
   const formList = Array.from(document.querySelectorAll('.popup__form'));
   formList.forEach((formElement) => {
   setEventListeners(formElement);
@@ -68,4 +68,11 @@ const toggleButtonState = (inputList, buttonElement) => {
   };
 };
 
-enableValidation();
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+});

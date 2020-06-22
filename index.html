@@ -50,24 +50,30 @@
     </p>
   </footer>
 
-  <!-- POPUP -->
+  <!-- BIOGRAPHY POPUP -->
 
-  <div class="popup">
-    <div class="popup__form-with-cross popup__form-with-cross_for-form">       
+  <div class="popup popup_type_edit-bio">
+    <div class="popup__container">       
       <button type="button" class="popup__exit"></button>
-
-      <form novalidate name="bio" method="post" action="#" class="popup__form popup__form_hidden">
+      <form novalidate name="bio" method="post" action="#" class="popup__form">
         <fieldset class="popup__input-container">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input id="name-input" type="text" placeholder="Введите Ваше имя" required minlength="2" maxlength="40" class="popup__input popup__input_name">
           <span id="name-input-error" class="popup__error"></span>
           <input id="bio-input" type="text" placeholder="Расскажите о себе" required minlength="2" maxlength="200" class="popup__input popup__input_bio">
           <span id="bio-input-error" class="popup__error"></span>
-          <button type="submit" disabled class="popup__save popup__save_disabled">Сохранить</button>
+          <button type="submit" class="popup__save">Сохранить</button>
         </fieldset>
       </form>
+    </div>    
+  </div>
 
-      <form novalidate name="addPhoto" method="post" action="#" class="popup__form popup__form_hidden">
+  <!-- CARD POPUP -->
+
+  <div class="popup popup_type_add-card">
+    <div class="popup__container">       
+      <button type="button" class="popup__exit"></button>
+      <form novalidate name="addPhoto" method="post" action="#" class="popup__form">
         <fieldset class="popup__input-container">
           <h2 class="popup__title">Новое место</h2>
           <input id="title-input" type="text" placeholder="Название" required minlength="1" maxlength="30" class="popup__input popup__input_title">
@@ -78,8 +84,12 @@
         </fieldset>
       </form>
     </div>
+  </div>
 
-    <div class="popup__form-with-cross popup__form-with-cross_for-photo">       
+  <!-- PHOTO POPUP -->
+
+  <div class="popup popup_type_max-photo">
+    <div class="popup__container popup__container_type_photo">       
       <button type="button" class="popup__exit"></button>      
       <img src="#" alt="" class="popup__photo">
       <h2 class="popup__photo-title"></h2>
@@ -87,6 +97,6 @@
   </div>
 
   <script src="./js.js"></script>
-  <script src="./validate.js"></script>
+  <script src="./val.js"></script>
 </body>
 </html>
