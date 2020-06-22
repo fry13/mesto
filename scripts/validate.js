@@ -15,7 +15,7 @@ function enableValidation(options) {
       // находим ее инпуты
       const inputElements = Array.from(formElement.querySelectorAll(options.inputSelector));
       // находим сабмит
-      const submitButton = formElement.querySelector('.popup__save');      
+      const submitButton = formElement.querySelector(options.submitButtonSelector);      
       // для всех инпутов
       inputElements.forEach(input => {
           // проверка валидности инпута

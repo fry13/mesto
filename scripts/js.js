@@ -53,37 +53,36 @@ function addEventListeners (card) {
   });
 }
 
-// открытие
-
-let currentPopup;
-
-function openPopup (popup) { 
-  popup.addEventListener('mousedown', missсlick);
-  document.addEventListener('keyup', escHandler);
-  popup.classList.add('popup_visibility_visible');
-  currentPopup = popup;
-}
-
-// закрытие
-
-function closePopup(popup) {
-  popup.removeEventListener('mousedown', missсlick);
-  document.removeEventListener('keyup', escHandler);
-  popup.classList.remove('popup_visibility_visible');
-
+function clearValidationErrors (popup) {
   const inputList = Array.from(popup.querySelectorAll('.popup__input'));
   const errorList = Array.from(popup.querySelectorAll('.popup__error'));
 
   inputList.forEach((input) => {input.classList.remove('popup__input_error')});
   errorList.forEach((error) => {error.textContent = ''});
+};
 
+// открытие
+
+function openPopup (popup) { 
+  popup.addEventListener('mousedown', missсlick);
+  document.addEventListener('keyup', escHandler);
+  popup.classList.add('popup_visibility_visible');
+  
+}
+
+// закрытие
+
+function closePopup(popup) {  
+  popup.removeEventListener('mousedown', missсlick);
+  document.removeEventListener('keyup', escHandler);
+  popup.classList.remove('popup_visibility_visible');  
 }
 
 // закрытие по Esc
 
 function escHandler(evt) {
   if (evt.key === 'Escape') {
-    closePopup(currentPopup);
+    closePopup(document.querySelector('.popup_visibility_visible'));
   }
 };
 
@@ -92,17 +91,19 @@ function escHandler(evt) {
 function missсlick(evt) {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__container')) {
     evt.stopImmediatePropagation();
-    closePopup(currentPopup);
+    closePopup(document.querySelector('.popup_visibility_visible'));
   }  
 }
 
 // закрытие по крестику
 
-Array.from(document.querySelectorAll('.popup__exit')).forEach(function closePopupThroughCross (item) {
-  item.addEventListener('click', () => {
-    closePopup(currentPopup);
-  })
-});
+Array.from(document.querySelectorAll('.popup__exit'))
+  .forEach(function closePopupThroughCross (item) {
+    item.addEventListener('click', () => {
+      closePopup(document.querySelector('.popup_visibility_visible'));
+    })
+  }
+);
 
 // стандартные карточки
 
@@ -115,6 +116,7 @@ initialCards.forEach( (card) => {
 editProfile.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputBio.value = profileBio.textContent;
+  clearValidationErrors(popupBio);
   openPopup(popupBio);
 });
 
@@ -124,6 +126,7 @@ addPhoto.addEventListener('click', () => {
   const button = photoForm.querySelector('.popup__save');
   button.classList.add('popup__save_disabled');
   button.disabled = true;
+  clearValidationErrors(popupCard);
   openPopup(popupCard);
 });
 
