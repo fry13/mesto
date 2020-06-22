@@ -1,3 +1,12 @@
+const validateOptions = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_disabled',
+  inputErrorClass: 'popup__input_error',
+  errorClass: 'popup__error'
+}
+
 function enableValidation(options) {
   // находим формы
   const formElements = Array.from(document.querySelectorAll(options.formSelector));
@@ -39,11 +48,4 @@ function handleInput(evt, errorClass) {
   }
 }
 
-enableValidation({
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__save',
-  inactiveButtonClass: 'popup__save_disabled',
-  inputErrorClass: 'popup__input_error',
-  errorClass: 'popup__error'
-});
+enableValidation(validateOptions);

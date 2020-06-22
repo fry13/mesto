@@ -1,7 +1,6 @@
 const popupBio = document.querySelector('.popup_type_edit-bio');
 const popupCard = document.querySelector('.popup_type_add-card');
 const popupPhoto = document.querySelector('.popup_type_max-photo');
-const popupList = Array.from(document.querySelectorAll('.popup'));
 
 const bioForm = document.forms.bio;
 const photoForm = document.forms.addPhoto;
@@ -21,60 +20,33 @@ const inputTitle = document.querySelector('.popup__input_title');
 const inputLink = document.querySelector('.popup__input_link');
 
 const cardContainer = document.querySelector('.elements');
-const cardTemplate = document.querySelector('#card-template').content; 
-
-const initialCards = [
-  {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+const cardTemplate = document.querySelector('#card-template').content;
 
 // создание фотокарточки
 
-function createCard (cardTitle, cardLink) {              
-  const newCard = cardTemplate.cloneNode(true);                                                                 // клонируем шаблон
+function createCard (cardTitle, cardLink) {
+  const newCard = cardTemplate.cloneNode(true);
    
-  newCard.querySelector('.elements__title').textContent = cardTitle;                                            // берем имя из аргумента
-  newCard.querySelector('.elements__photo').src = cardLink;                                                     // фото из аргумента
-  newCard.querySelector('.elements__photo').alt = cardTitle;                                                    // alt из имени
+  newCard.querySelector('.elements__title').textContent = cardTitle;
+  newCard.querySelector('.elements__photo').src = cardLink;
+  newCard.querySelector('.elements__photo').alt = cardTitle;
   
   addEventListeners(newCard);
-  return newCard;                                                                                               // возвращаем готовую карточку
+  return newCard;
 };
 
 // добавление слушателей на карточку
 
 function addEventListeners (card) {
   const like = card.querySelector('.elements__like');
-  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));                         // слушатель на лайки
+  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
   
   const bin = card.querySelector('.elements__trash-bin');
-  bin.addEventListener('click', () => bin.parentElement.remove());                                              // слушатель на удаление
+  bin.addEventListener('click', () => bin.parentElement.remove());
 
   const photo = card.querySelector('.elements__photo');
   photo.addEventListener('click', (evt) => {
-    maxPhoto.src = evt.target.src;                                                                             // берем адрес и alt из таргета
+    maxPhoto.src = evt.target.src;
     maxPhoto.alt = evt.target.alt;
     maxPhotoTitle.textContent = evt.target.alt;
     openPopup(popupPhoto)
@@ -83,30 +55,35 @@ function addEventListeners (card) {
 
 // открытие
 
+let currentPopup;
+
 function openPopup (popup) { 
   popup.addEventListener('mousedown', missсlick);
-  document.addEventListener('keyup', escHandler);  
-  popup.classList.add('popup_visibility_visible'); 
+  document.addEventListener('keyup', escHandler);
+  popup.classList.add('popup_visibility_visible');
+  currentPopup = popup;
 }
 
 // закрытие
 
-function closePopup() {  
-  const popup = popupList.find(popup => popup.classList.contains('popup_visibility_visible'));
+function closePopup(popup) {
   popup.removeEventListener('mousedown', missсlick);
-  document.removeEventListener('keyup', escHandler);  
+  document.removeEventListener('keyup', escHandler);
   popup.classList.remove('popup_visibility_visible');
+
   const inputList = Array.from(popup.querySelectorAll('.popup__input'));
   const errorList = Array.from(popup.querySelectorAll('.popup__error'));
+
   inputList.forEach((input) => {input.classList.remove('popup__input_error')});
   errorList.forEach((error) => {error.textContent = ''});
+
 }
 
 // закрытие по Esc
 
-function escHandler(evt) {      
+function escHandler(evt) {
   if (evt.key === 'Escape') {
-    closePopup();
+    closePopup(currentPopup);
   }
 };
 
@@ -115,7 +92,7 @@ function escHandler(evt) {
 function missсlick(evt) {
   if (evt.target.classList.contains('popup') || evt.target.classList.contains('popup__container')) {
     evt.stopImmediatePropagation();
-    closePopup();
+    closePopup(currentPopup);
   }  
 }
 
@@ -123,7 +100,7 @@ function missсlick(evt) {
 
 Array.from(document.querySelectorAll('.popup__exit')).forEach(function closePopupThroughCross (item) {
   item.addEventListener('click', () => {
-    closePopup();
+    closePopup(currentPopup);
   })
 });
 
@@ -136,14 +113,17 @@ initialCards.forEach( (card) => {
 // слушатели кнопок
 
 editProfile.addEventListener('click', () => {
-  inputName.value = profileName.textContent;                                                                    // заполняем инпуты из био
+  inputName.value = profileName.textContent;
   inputBio.value = profileBio.textContent;
-  openPopup(popupBio);  
+  openPopup(popupBio);
 });
 
 addPhoto.addEventListener('click', () => {
-  inputTitle.value = '';                                                                                        // очищаем инпуты
+  inputTitle.value = '';
   inputLink.value = '';
+  const button = photoForm.querySelector('.popup__save');
+  button.classList.add('popup__save_disabled');
+  button.disabled = true;
   openPopup(popupCard);
 });
 
@@ -151,11 +131,11 @@ bioForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileBio.textContent = inputBio.value;
-  closePopup();
+  closePopup(currentPopup);
 });
 
 photoForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   cardContainer.prepend(createCard(inputTitle.value, inputLink.value));
-  closePopup();
+  closePopup(currentPopup);
 })
