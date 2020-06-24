@@ -53,9 +53,9 @@ function addEventListeners (card) {
   });
 }
 
-function clearValidationErrors (popup) {
-  const inputList = Array.from(popup.querySelectorAll('.popup__input'));
-  const errorList = Array.from(popup.querySelectorAll('.popup__error'));
+function clearValidationErrors (form) {
+  const inputList = Array.from(form.querySelectorAll('.popup__input'));
+  const errorList = Array.from(form.querySelectorAll('.popup__error'));
 
   inputList.forEach((input) => {input.classList.remove('popup__input_error')});
   errorList.forEach((error) => {error.textContent = ''});
@@ -116,7 +116,7 @@ initialCards.forEach( (card) => {
 editProfile.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputBio.value = profileBio.textContent;
-  clearValidationErrors(popupBio);
+  clearValidationErrors(document.forms.bio);
   openPopup(popupBio);
 });
 
@@ -126,7 +126,7 @@ addPhoto.addEventListener('click', () => {
   const button = photoForm.querySelector('.popup__save');
   button.classList.add('popup__save_disabled');
   button.disabled = true;
-  clearValidationErrors(popupCard);
+  clearValidationErrors(document.forms.addPhoto);
   openPopup(popupCard);
 });
 
@@ -134,11 +134,11 @@ bioForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileBio.textContent = inputBio.value;
-  closePopup(currentPopup);
+  closePopup(document.querySelector('.popup_visibility_visible'));
 });
 
 photoForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   cardContainer.prepend(createCard(inputTitle.value, inputLink.value));
-  closePopup(currentPopup);
+  closePopup(document.querySelector('.popup_visibility_visible'));
 })
