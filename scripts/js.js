@@ -22,6 +22,47 @@ const inputLink = document.querySelector('.popup__input_link');
 const cardContainer = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#card-template').content;
 
+class Card1 {
+  constructor(card, template) {
+    this._card = card;
+    this._template = template;
+  }
+
+  getCard(_name, _link) {
+    this._template = document.querySelector('#card-template').content.cloneNode(true);
+    this._photo = this._template.querySelector('.elements__photo');
+    this._title = this._template.querySelector('.elements__title');
+    this._like = this._template.querySelector('.elements__like');
+    this._bin = this._template.querySelector('.elements__trash-bin');
+    this._title.textContent = _name;
+    this._photo.src = _link;
+    this._photo.alt = _name;
+    this._addEventListners();
+    return this._template;
+  }
+
+  _addEventListners() {
+    this._like.addEventListener('click', () => this._toggleLike());
+    this._bin.addEventListener('click', () => this._remove());
+    this._photo.addEventListener('click', (evt) => {
+      maxPhoto.src = evt.target.src;
+      maxPhoto.alt = evt.target.alt;
+      maxPhotoTitle.textContent = evt.target.alt;
+      openPopup(popupPhoto);
+    });
+  }
+
+  _toggleLike() {
+    this._like.classList.toggle('elements__like_active');
+  }
+
+  _remove() {
+    this._bin.parentElement.remove();
+  }
+}
+
+
+
 // создание фотокарточки
 
 function createCard (cardTitle, cardLink) {
@@ -130,6 +171,7 @@ addPhoto.addEventListener('click', () => {
   openPopup(popupCard);
 });
 
+
 bioForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = inputName.value;
@@ -137,8 +179,16 @@ bioForm.addEventListener('submit', (evt) => {
   closePopup(document.querySelector('.popup_visibility_visible'));
 });
 
+// photoForm.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
+//   cardContainer.prepend(createCard(inputTitle.value, inputLink.value));
+//   closePopup(document.querySelector('.popup_visibility_visible'));
+// });
+
 photoForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  cardContainer.prepend(createCard(inputTitle.value, inputLink.value));
+  const card = new Card1;
+  
+  cardContainer.prepend(card.getCard(inputTitle.value, inputLink.value));
   closePopup(document.querySelector('.popup_visibility_visible'));
 })
