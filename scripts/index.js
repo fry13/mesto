@@ -1,6 +1,9 @@
+import {Card} from './card.js';
+import {FormValidator} from './formvalidator.js';
+export {openPopup};
+
 const popupBio = document.querySelector('.popup_type_edit-bio');
 const popupCard = document.querySelector('.popup_type_add-card');
-const popupPhoto = document.querySelector('.popup_type_max-photo');
 
 const bioForm = document.forms.bio;
 const photoForm = document.forms.addPhoto;
@@ -11,9 +14,6 @@ const addPhoto = document.querySelector('.profile__button-add');
 const profileName = document.querySelector('.profile__name');
 const profileBio = document.querySelector('.profile__bio');
 
-const maxPhoto = document.querySelector('.popup__photo');
-const maxPhotoTitle = document.querySelector('.popup__photo-title');
-
 const inputName = document.querySelector('.popup__input_name');
 const inputBio = document.querySelector('.popup__input_bio');
 const inputTitle = document.querySelector('.popup__input_title');
@@ -22,82 +22,11 @@ const inputLink = document.querySelector('.popup__input_link');
 const cardContainer = document.querySelector('.elements');
 const cardTemplate = document.querySelector('#card-template').content;
 
-class Card1 {
-  constructor(card, template) {
-    this._card = card;
-    this._template = template;
-  }
-
-  getCard(_name, _link) {
-    this._template = document.querySelector('#card-template').content.cloneNode(true);
-    this._photo = this._template.querySelector('.elements__photo');
-    this._title = this._template.querySelector('.elements__title');
-    this._like = this._template.querySelector('.elements__like');
-    this._bin = this._template.querySelector('.elements__trash-bin');
-    this._title.textContent = _name;
-    this._photo.src = _link;
-    this._photo.alt = _name;
-    this._addEventListners();
-    return this._template;
-  }
-
-  _addEventListners() {
-    this._like.addEventListener('click', () => this._toggleLike());
-    this._bin.addEventListener('click', () => this._remove());
-    this._photo.addEventListener('click', (evt) => {
-      maxPhoto.src = evt.target.src;
-      maxPhoto.alt = evt.target.alt;
-      maxPhotoTitle.textContent = evt.target.alt;
-      openPopup(popupPhoto);
-    });
-  }
-
-  _toggleLike() {
-    this._like.classList.toggle('elements__like_active');
-  }
-
-  _remove() {
-    this._bin.parentElement.remove();
-  }
-}
-
-
-
-// создание фотокарточки
-
-function createCard (cardTitle, cardLink) {
-  const newCard = cardTemplate.cloneNode(true);
-   
-  newCard.querySelector('.elements__title').textContent = cardTitle;
-  newCard.querySelector('.elements__photo').src = cardLink;
-  newCard.querySelector('.elements__photo').alt = cardTitle;
-  
-  addEventListeners(newCard);
-  return newCard;
-};
-
-// добавление слушателей на карточку
-
-function addEventListeners (card) {
-  const like = card.querySelector('.elements__like');
-  like.addEventListener('click', () => like.classList.toggle('elements__like_active'));
-  
-  const bin = card.querySelector('.elements__trash-bin');
-  bin.addEventListener('click', () => bin.parentElement.remove());
-
-  const photo = card.querySelector('.elements__photo');
-  photo.addEventListener('click', (evt) => {
-    maxPhoto.src = evt.target.src;
-    maxPhoto.alt = evt.target.alt;
-    maxPhotoTitle.textContent = evt.target.alt;
-    openPopup(popupPhoto)
-  });
-}
+// очищение ошибок
 
 function clearValidationErrors (form) {
   const inputList = Array.from(form.querySelectorAll('.popup__input'));
   const errorList = Array.from(form.querySelectorAll('.popup__error'));
-
   inputList.forEach((input) => {input.classList.remove('popup__input_error')});
   errorList.forEach((error) => {error.textContent = ''});
 };
@@ -107,8 +36,7 @@ function clearValidationErrors (form) {
 function openPopup (popup) { 
   popup.addEventListener('mousedown', missсlick);
   document.addEventListener('keyup', escHandler);
-  popup.classList.add('popup_visibility_visible');
-  
+  popup.classList.add('popup_visibility_visible');  
 }
 
 // закрытие
@@ -148,8 +76,9 @@ Array.from(document.querySelectorAll('.popup__exit'))
 
 // стандартные карточки
 
-initialCards.forEach( (card) => {
-  cardContainer.append(createCard(card.name, card.link));
+initialCards.forEach( (item) => {
+  const cardElement = new Card(item, cardTemplate);
+  cardContainer.append(cardElement.getCard());
 });
 
 // слушатели кнопок
@@ -171,7 +100,6 @@ addPhoto.addEventListener('click', () => {
   openPopup(popupCard);
 });
 
-
 bioForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = inputName.value;
@@ -179,16 +107,27 @@ bioForm.addEventListener('submit', (evt) => {
   closePopup(document.querySelector('.popup_visibility_visible'));
 });
 
-// photoForm.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-//   cardContainer.prepend(createCard(inputTitle.value, inputLink.value));
-//   closePopup(document.querySelector('.popup_visibility_visible'));
-// });
-
 photoForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const card = new Card1;
-  
-  cardContainer.prepend(card.getCard(inputTitle.value, inputLink.value));
+  const data = {
+    name: inputTitle.value,
+    link: inputLink.value
+  }
+  const cardElement = new Card(data, cardTemplate);  
+  cardContainer.prepend(cardElement.getCard());
   closePopup(document.querySelector('.popup_visibility_visible'));
 })
+
+const validateOptions = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_disabled',
+  inputErrorClass: 'popup__input_error',
+  errorClass: 'popup__error'
+}
+
+const validationBio = new FormValidator(validateOptions, bioForm);
+validationBio.enableValidation();
+const validationPhoto = new FormValidator(validateOptions, photoForm);
+validationPhoto.enableValidation();
