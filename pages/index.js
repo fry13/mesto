@@ -44,7 +44,7 @@ imgPopup.setEventListeners();
 // new card popup
 
 const cardPopup = new PopupWithForm(cardPopupSelector, (data)=> {
-  const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(title, link));  
+  const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.title, data.link));  
   cardsList.addItem(cardElement.getCard());
 });
 cardPopup.setEventListeners();
@@ -55,7 +55,7 @@ cardPopup.setEventListeners();
 const cardsList = new Section({
     items: initialCards,
     renderer: (data) => {
-      const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(title, link));
+      const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.title, data.link));
       cardsList.addItem(cardElement.getCard());
     }
   },
