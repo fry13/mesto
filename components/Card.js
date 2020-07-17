@@ -1,10 +1,9 @@
-import {openPopup} from './utils.js';
-
-class Card {
-  constructor(card, template) {
-    this._name = card.name;
+export class Card {
+  constructor(card, template, handleCardClick) {
+    this._name = card.title;
     this._link = card.link;
     this._template = template;
+    this._handleCardClick = handleCardClick;
   }
 
   getCard() {
@@ -20,20 +19,11 @@ class Card {
     return this._former;
   }
 
+ 
   _addEventListners() {
     this._like.addEventListener('click', () => this._toggleLike());
     this._bin.addEventListener('click', () => this._remove());
-    this._photo.addEventListener('click', (event) => this._maximize(event));
-  }
-
-  _maximize(evt) {
-    const maxPhoto = document.querySelector('.popup__photo');
-    const maxPhotoTitle = document.querySelector('.popup__photo-title');
-    const popupPhoto = document.querySelector('.popup_type_max-photo');
-    maxPhoto.src = evt.target.src;
-    maxPhoto.alt = evt.target.alt;
-    maxPhotoTitle.textContent = evt.target.alt;
-    openPopup(popupPhoto);
+    this._photo.addEventListener('click', () => this._handleCardClick(this._name, this._link)); ///////////
   }
 
   _toggleLike() {
@@ -45,4 +35,3 @@ class Card {
   }
 }
 
-export {Card};
