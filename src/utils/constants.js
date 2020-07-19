@@ -1,13 +1,10 @@
 // forms
 export const bioForm = document.forms.bio;
 export const photoForm = document.forms.addPhoto;
-// popups selectors
-export const bioPopupSelector = '.popup_type_edit-bio';
-export const photoPopupSelector = '.popup_type_max-photo';
-export const cardPopupSelector = '.popup_type_add-card';
 // buttons
 export const editProfile = document.querySelector('.profile__button-edit');
 export const addPhoto = document.querySelector('.profile__button-add');
+export const savePhoto = photoForm.querySelector('.popup__save');
 // biography selectors
 export const profileNameSelector = '.profile__name';
 export const profileBioSelector = '.profile__bio';

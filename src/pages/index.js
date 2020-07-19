@@ -7,23 +7,24 @@ import {PopupWithForm} from '../components/PopupWithForm.js';
 import {UserInfo} from '../components/UserInfo.js';
 import {
   bioForm, 
-  photoForm, 
-  bioPopupSelector,
-  photoPopupSelector,
-  cardPopupSelector,
+  photoForm,
   editProfile,
   addPhoto,
+  savePhoto,
   profileNameSelector,
   profileBioSelector,
   inputName,
   inputBio,
-  inputTitle,
-  inputLink,
   cardContainerSelector,
   cardTemplate,
   validateOptions,
   initialCards
 } from '../utils/constants.js';
+
+const bioPopupSelector = '.popup_type_edit-bio'; 
+const photoPopupSelector = '.popup_type_max-photo'; 
+const cardPopupSelector = '.popup_type_add-card';
+
 
 // user information
 
@@ -65,23 +66,26 @@ const cardsList = new Section({
 cardsList.render();
 
 
+// button handlers
+
+function editProfileHandler() {
+  validationBio.clearValidationErrors();
+  inputName.value = userInfo.getUserInfo().name;
+  inputBio.value = userInfo.getUserInfo().bio;
+  bioPopup.open();
+}
+
+function addPhotoHandler() {
+  validationPhoto.clearValidationErrors();
+  savePhoto.classList.add('popup__save_disabled');
+  savePhoto.disabled = true;
+  cardPopup.open();
+}
+
 // button listeners
 
-editProfile.addEventListener('click', () => {
-  //userInfo.getUserInfo();
-  inputName.value = userInfo._userInfo.name;
-  inputBio.value = userInfo._userInfo.bio;
-  bioPopup.open();
-});
-
-addPhoto.addEventListener('click', () => {
-  inputTitle.value = '';
-  inputLink.value = '';
-  const button = photoForm.querySelector('.popup__save');
-  button.classList.add('popup__save_disabled');
-  button.disabled = true;
-  cardPopup.open();
-});
+editProfile.addEventListener('click', editProfileHandler);
+addPhoto.addEventListener('click', addPhotoHandler);
 
 
 // validation

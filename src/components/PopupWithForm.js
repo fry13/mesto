@@ -22,15 +22,15 @@ export class PopupWithForm extends Popup {
     })
   }
 
-  _clearValidationErrors() {
-    const inputList = Array.from(this._form.querySelectorAll('.popup__input'));
-    const errorList = Array.from(this._form.querySelectorAll('.popup__error'));
-    inputList.forEach((input) => {input.classList.remove('popup__input_error')});
-    errorList.forEach((error) => {error.textContent = ''});
-  };
+  // _clearValidationErrors() {
+  //   const inputList = Array.from(this._form.querySelectorAll('.popup__input'));
+  //   const errorList = Array.from(this._form.querySelectorAll('.popup__error'));
+  //   inputList.forEach((input) => {input.classList.remove('popup__input_error')});
+  //   errorList.forEach((error) => {error.textContent = ''});
+  // };
 
   open() {
-    this._clearValidationErrors();
+    //this._clearValidationErrors();
     super.open();    
   }
 

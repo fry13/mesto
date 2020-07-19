@@ -33,4 +33,11 @@ class FormValidator {
         error.textContent = input.validationMessage;
     }
   }
+
+  clearValidationErrors() {
+    const inputList = Array.from(this._form.querySelectorAll('.popup__input'));
+    const errorList = Array.from(this._form.querySelectorAll('.popup__error'));
+    inputList.forEach((input) => {input.classList.remove('popup__input_error')});
+    errorList.forEach((error) => {error.textContent = ''});
+  };
 }
