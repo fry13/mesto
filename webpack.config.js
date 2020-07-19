@@ -46,5 +46,15 @@ module.exports = {
         template: './index.html'
       }),
       new MiniCssExtractPlugin(),
+      new GhPagesWebpackPlugin({
+        path: './dist',
+        options: {
+            message: 'hotfix',
+            user: {
+                name: 'fry13',
+                email: 'ninetailed1995@gmail.com'
+            }
+        }
+    })
     ]
   };
