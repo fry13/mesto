@@ -70,8 +70,9 @@ cardsList.render();
 
 function editProfileHandler() {
   validationBio.clearValidationErrors();
-  inputName.value = userInfo.getUserInfo().name;
-  inputBio.value = userInfo.getUserInfo().bio;
+  const userData = userInfo.getUserInfo();
+  inputName.value = userData.name;
+  inputBio.value = userData.bio;
   bioPopup.open();
 }
 
