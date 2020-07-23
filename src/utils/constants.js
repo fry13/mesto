@@ -1,3 +1,9 @@
+//identity
+export const identity = {
+    token: '4f12e696-6331-47e4-913f-e0c0002ac61f',
+    url: 'https://mesto.nomoreparties.co/v1/cohort-13',
+    id: '13b75ba77788c0a719630101',
+}
 // forms
 export const bioForm = document.forms.bio;
 export const photoForm = document.forms.addPhoto;
@@ -8,6 +14,7 @@ export const savePhoto = photoForm.querySelector('.popup__save');
 // biography selectors
 export const profileNameSelector = '.profile__name';
 export const profileBioSelector = '.profile__bio';
+export const profileAvatarselector = '.profile__avatar';
 // inputs
 export const inputName = document.querySelector('.popup__input_name');
 export const inputBio = document.querySelector('.popup__input_bio');

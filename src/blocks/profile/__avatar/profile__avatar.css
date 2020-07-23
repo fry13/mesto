@@ -1,8 +1,3 @@
-.profile__avatar {
-  border-radius: 50%;
-  width: 120px;
-  height: 120px;
-  grid-area: avatar;
-  align-self: top;
-  justify-self: center;
+.profile__avatar {  
+  object-fit: cover;
 }

@@ -5,6 +5,7 @@ import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
 import {UserInfo} from '../components/UserInfo.js';
+import {Api} from '../components/Api.js'
 import {
   bioForm, 
   photoForm,
@@ -13,27 +14,35 @@ import {
   savePhoto,
   profileNameSelector,
   profileBioSelector,
+  profileAvatarselector,
   inputName,
   inputBio,
   cardContainerSelector,
   cardTemplate,
   validateOptions,
-  initialCards
+  identity
 } from '../utils/constants.js';
 
 const bioPopupSelector = '.popup_type_edit-bio'; 
 const photoPopupSelector = '.popup_type_max-photo'; 
 const cardPopupSelector = '.popup_type_add-card';
 
+// API
+
+const api = new Api(identity);
+
 
 // user information
 
-const userInfo = new UserInfo(profileNameSelector, profileBioSelector);
-
+const userInfo = new UserInfo(profileNameSelector, profileBioSelector, profileAvatarselector, api, identity.id);
+userInfo.getInitialUserInfo();
 
 // biography popup
 
-const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {userInfo.setUserInfo(name, bio)});
+const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {
+  userInfo.setUserInfo(name, bio);
+  api.setUserInfo(name, bio);
+});
 bioPopup.setEventListeners();
 
 
@@ -45,35 +54,54 @@ imgPopup.setEventListeners();
 
 // new card popup
 
-const cardPopup = new PopupWithForm(cardPopupSelector, (data)=> {
-  const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.title, data.link));  
-  cardsList.addItem(cardElement.getCard());
+function postCard(data) {
+  api.createCard(data.name, data.link)
+  .then(res => {
+    const cardElement = new Card(
+      res, 
+      cardTemplate, 
+      ()=> imgPopup.open(res.name, res.link), 
+      api, 
+      identity.id
+    );
+    cardsList.addItem(cardElement.getCard());
+  })
+}
+
+const cardPopup = new PopupWithForm(cardPopupSelector, (data) => {
+  postCard(data);
 });
 cardPopup.setEventListeners();
 
 
 // initial cards
 
-const cardsList = new Section({
-    items: initialCards,
-    renderer: (data) => {
-      const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.title, data.link));
-      cardsList.addItem(cardElement.getCard());
+let cardsList = {};
+
+function addCards() {
+  api.getInitialCards().then(res => {
+    cardsList = new Section({
+      items: res,
+      renderer: (data) => {
+        const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.name, data.link), api, identity.id);
+        cardsList.addItem(cardElement.getCard());
     }
   },
   cardContainerSelector
-);
-cardsList.render();
+  );
+  cardsList.render();
+  })
+}
+addCards();
 
 
 // button handlers
 
 function editProfileHandler() {
-  validationBio.clearValidationErrors();
-  const userData = userInfo.getUserInfo();
-  inputName.value = userData.name;
-  inputBio.value = userData.bio;
-  bioPopup.open();
+  validationBio.clearValidationErrors();  
+  inputName.value = document.querySelector(profileNameSelector).textContent;
+  inputBio.value = document.querySelector(profileBioSelector).textContent;;
+  bioPopup.open();   
 }
 
 function addPhotoHandler() {
@@ -82,6 +110,7 @@ function addPhotoHandler() {
   savePhoto.disabled = true;
   cardPopup.open();
 }
+
 
 // button listeners
 

@@ -11,9 +11,8 @@ export class Section {
 
   render() {
     this.clear();
-    this._renderedItems.forEach(item => {
-      this._renderer(item);
-    })
+    const reversItems = this._renderedItems.reverse();
+    reversItems.forEach(item => {this._renderer(item)});    
   }
 
   addItem(item) {

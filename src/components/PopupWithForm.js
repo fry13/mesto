@@ -29,10 +29,10 @@ export class PopupWithForm extends Popup {
   //   errorList.forEach((error) => {error.textContent = ''});
   // };
 
-  open() {
-    //this._clearValidationErrors();
-    super.open();    
-  }
+  // open() {
+  //   //this._clearValidationErrors();
+  //   super.open();    
+  // }
 
   close() {
     super.close();
