@@ -1,0 +1,20 @@
+.elements__trash-bin {
+  background: url(../../../images/trash-bin.svg);
+  height: 19.3px;
+  width: 18px;
+  border: 0;
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  transition: ease-out .2s;
+  cursor: pointer;
+}
+
+.elements__trash-bin:hover{
+  opacity: .6;
+  transition: ease-in .2s;
+}
+
+.elements__trash-bin:focus {    
+  outline: none;
+}

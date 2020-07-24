@@ -1,0 +1,8 @@
+.elements__like_active {
+  background: url(../../../../images/like_active.svg) center no-repeat;
+}
+
+.elements__like_active:hover{
+  opacity: .6;
+  transition: ease-in .2s;
+}
