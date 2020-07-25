@@ -1,9 +1,10 @@
 export class Card {
-  constructor({name, link, likes, owner, _id}, template, handleCardClick, api, myId) {
+  constructor({name, link, likes, owner, _id}, template, handleCardClick, handleBinClick, api, myId) {
     this._name = name;
     this._link = link;
     this._template = template;
     this._handleCardClick = handleCardClick;
+    this._handleBinClick = handleBinClick;
     this._likes = likes;
     this._owner = owner;
     this._api = api;
@@ -36,10 +37,10 @@ export class Card {
     return this._former;
   }
  
-  _addEventListners() {
+    _addEventListners() {
     this._like.addEventListener('click', () => this._toggleLike());
-    this._bin.addEventListener('click', () => this._remove());
-    this._photo.addEventListener('click', () => this._handleCardClick(this._name, this._link)); ///////////
+    this._bin.addEventListener('click', () => this._handleBinClick());
+    this._photo.addEventListener('click', () => this._handleCardClick());
   }
  
   _isCardLiked() {    
@@ -62,7 +63,7 @@ export class Card {
     )
   }
 
-  _remove() {
+  removeCard() {
     this._api.deleteCard(this.id)
     .then(this._bin.parentElement.remove());
   }

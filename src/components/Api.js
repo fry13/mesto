@@ -52,6 +52,7 @@ export class Api {
     return fetch((`${this._url}/cards/${id}`), {
       headers: {
         authorization: this._token,
+        'Content-Type': 'application/json'
       },
       method: 'DELETE'
     })
@@ -63,6 +64,7 @@ export class Api {
     return fetch((`${this._url}/cards/likes/${id}`), {      
       headers: {
         authorization: this._token,
+        'Content-Type': 'application/json'
       },
       method: 'PUT'
     })
@@ -74,6 +76,7 @@ export class Api {
     return fetch((`${this._url}/cards/likes/${id}`), {      
       headers: {
         authorization: this._token,
+        'Content-Type': 'application/json'
       },
       method: 'DELETE'
     })
@@ -94,7 +97,7 @@ export class Api {
     .catch(this._handleError)
   }
 
-  setUserInfo (name, about) {
+  setUserInfo (name, bio) {
     return fetch(`${this._url}/users/me`, {        
         headers: {
           authorization: this._token,
@@ -102,11 +105,24 @@ export class Api {
         },
         body: JSON.stringify({
           name: name,
-          about: about
+          about: bio
         }),
         method: 'PATCH'
       }
     )
+    .then(this._handleResponse)
+    .catch(this._handleError)
+  }
+
+  setAvatar(data) {
+    return fetch((`${this._url}/users/me/avatar`), {
+      headers: {
+        authorization: this._token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      method: 'PATCH'
+    })
     .then(this._handleResponse)
     .catch(this._handleError)
   }

@@ -8,7 +8,7 @@ export class UserInfo {
 
   getInitialUserInfo() {
     this.getUserInfo()
-    .then(() => this.setUserInfo(this._userInfo.name, this._userInfo.bio));
+    .then(() => this.setUserInfo(this._userInfo.name, this._userInfo.bio, this._userInfo.avatar));
   }
 
   getUserInfo() {
@@ -28,8 +28,9 @@ export class UserInfo {
     })   
   }
 
-  setUserInfo(name, bio) {
-    this._name.textContent = name;
-    this._bio.textContent = bio;
+  setUserInfo(name, bio, avatar) {
+    if (name) this._name.textContent = name;
+    if (bio) this._bio.textContent = bio;
+    if (avatar) this._avatar.src = avatar;
   }
 }

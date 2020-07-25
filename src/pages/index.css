@@ -11,3 +11,6 @@
 @import url(../blocks/popup/_type/_max-photo/popup_type_max-photo.css);
 @import url(../blocks/popup/__save/_disabled/popup__save_disabled.css);
 @import url(../blocks/popup/__input/_error/popup__input_error.css);
+@import url(../blocks/popup/__form/_type/_no-input/popup__form_type_no-input.css);
+@import url(../blocks/popup/__form/_type/_one-input/popup__form_type_one-input.css);
+@import url(../blocks/popup/__form/_type/_two-inputs/popup__form_type_two-inputs.css);

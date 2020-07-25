@@ -4,12 +4,15 @@ import {FormValidator} from '../components/FormValidator.js';
 import {Section} from '../components/Section.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
+import {PopupWithConfirm} from '../components/PopupWithConfirm.js';
 import {UserInfo} from '../components/UserInfo.js';
 import {Api} from '../components/Api.js'
 import {
   bioForm, 
   photoForm,
+  avatarForm,
   editProfile,
+  setAvatar,
   addPhoto,
   savePhoto,
   profileNameSelector,
@@ -26,6 +29,9 @@ import {
 const bioPopupSelector = '.popup_type_edit-bio'; 
 const photoPopupSelector = '.popup_type_max-photo'; 
 const cardPopupSelector = '.popup_type_add-card';
+const avatarPopupSelector = '.popup_type_avatar';
+const deleteCardPopupSelector = '.popup_type_delete-card';
+
 
 // API
 
@@ -37,11 +43,13 @@ const api = new Api(identity);
 const userInfo = new UserInfo(profileNameSelector, profileBioSelector, profileAvatarselector, api, identity.id);
 userInfo.getInitialUserInfo();
 
+
 // biography popup
 
 const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {
   userInfo.setUserInfo(name, bio);
-  api.setUserInfo(name, bio);
+  api.setUserInfo(name, bio)
+  .then(bioPopup.close());
 });
 bioPopup.setEventListeners();
 
@@ -61,20 +69,49 @@ function postCard(data) {
       res, 
       cardTemplate, 
       ()=> imgPopup.open(res.name, res.link), 
+      ()=> {
+      deleteCardPopup.setSubmitHandler(()=>{
+        cardElement.removeCard();
+      })
+      deleteCardPopup.open();
+    }, 
       api, 
       identity.id
     );
     cardsList.addItem(cardElement.getCard());
+    cardPopup.close()
   })
 }
 
 const cardPopup = new PopupWithForm(cardPopupSelector, (data) => {
-  postCard(data);
+  postCard(data)
 });
 cardPopup.setEventListeners();
 
 
-// initial cards
+// avatar popup
+
+function newAvatar(data) {
+  api.setAvatar(data)
+  .then((res)=>{
+    document.querySelector('.profile__avatar').src = res.avatar;
+    avatarPopup.close();
+  })
+}
+
+const avatarPopup = new PopupWithForm(avatarPopupSelector, (link) => {
+  newAvatar(link);
+});
+avatarPopup.setEventListeners();
+
+
+// delete card popup
+
+const deleteCardPopup = new PopupWithConfirm(deleteCardPopupSelector);
+deleteCardPopup.setEventListeners();
+
+
+// render cards
 
 let cardsList = {};
 
@@ -83,7 +120,18 @@ function addCards() {
     cardsList = new Section({
       items: res,
       renderer: (data) => {
-        const cardElement = new Card(data, cardTemplate, ()=> imgPopup.open(data.name, data.link), api, identity.id);
+        const cardElement = new Card(data, 
+          cardTemplate, 
+          ()=> imgPopup.open(data.name, data.link), 
+          ()=> {
+            deleteCardPopup.setSubmitHandler(()=>{
+              cardElement.removeCard();
+            })
+            deleteCardPopup.open();
+          }, 
+          api, 
+          identity.id
+        );
         cardsList.addItem(cardElement.getCard());
     }
   },
@@ -111,11 +159,16 @@ function addPhotoHandler() {
   cardPopup.open();
 }
 
+function setAvatarHandler() {
+  avatarPopup.open();
+}
+
 
 // button listeners
 
 editProfile.addEventListener('click', editProfileHandler);
 addPhoto.addEventListener('click', addPhotoHandler);
+setAvatar.addEventListener('click', setAvatarHandler)
 
 
 // validation
@@ -124,3 +177,5 @@ const validationBio = new FormValidator(validateOptions, bioForm);
 validationBio.enableValidation();
 const validationPhoto = new FormValidator(validateOptions, photoForm);
 validationPhoto.enableValidation();
+const validationAvatar = new FormValidator(validateOptions, avatarForm);
+validationAvatar.enableValidation();

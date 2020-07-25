@@ -7,9 +7,11 @@ export const identity = {
 // forms
 export const bioForm = document.forms.bio;
 export const photoForm = document.forms.addPhoto;
+export const avatarForm = document.forms.setAvatar;
 // buttons
 export const editProfile = document.querySelector('.profile__button-edit');
 export const addPhoto = document.querySelector('.profile__button-add');
+export const setAvatar = document.querySelector('.profile__button-avatar');
 export const savePhoto = photoForm.querySelector('.popup__save');
 // biography selectors
 export const profileNameSelector = '.profile__name';
