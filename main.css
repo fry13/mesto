@@ -22,7 +22,7 @@
 .elements{display:grid;grid-template-columns:repeat(auto-fit,282px);grid-template-rows:repeat(auto-fit,1fr);margin:47.25px auto 0;max-width:882px;width:95%;gap:20px 18px;justify-content:center}@media screen and (max-width:882px){.elements{margin:36px auto 0;grid-template-columns:repeat(auto-fit,282px)}}
 .footer__copyright{font-style:normal;font-weight:400;font-size:18px;line-height:22px;color:#545454}@media screen and (max-width:882px){.footer__copyright{font-size:14px;line-height:17px}}
 .footer{max-width:882px;margin:66px auto 60px}@media screen and (max-width:882px){.footer{margin:48px 0 36px 20px}}
-.popup__form{background-color:#fff;max-width:430px;width:100%;height:330px;box-shadow:0 0 25px rgba(0,0,0,.15);border-radius:10px;padding:5px}@media screen and (max-width:530px){.popup__form{max-width:90%}}
+.popup__form{background-color:#fff;max-width:430px;width:100%;box-shadow:0 0 25px rgba(0,0,0,.15);border-radius:10px;padding:5px}@media screen and (max-width:530px){.popup__form{max-width:90%}}
 .popup__container{width:480px;display:flex;flex-direction:column;margin-left:40px;transition:.3s ease-in-out}@media screen and (max-width:530px){.popup__container{width:100%;margin:0}}
 .popup__container_type_photo{width:auto;height:auto;display:flex}
 .popup__input-container{border:0;padding:0}
@@ -39,4 +39,7 @@
 .popup_type_max-photo{background-color:rgba(0,0,0,.9)}
 .popup__save_disabled{color:#c4c4c4;border:1px solid #c4c4c4}.popup__save_disabled,.popup__save_disabled:hover{background:transparent}
 .popup__input_error,.popup__input_error:focus{border-bottom:1px solid red}.popup__input_error:focus{outline:none}
+.popup__form_type_no-input{height:181px}
+.popup__form_type_one-input{height:272px}
+.popup__form_type_two-inputs{height:330px}
 
