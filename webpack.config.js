@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+
 module.exports = {
     entry: { main: './src/pages/index.js' },
     output: {
@@ -46,15 +47,6 @@ module.exports = {
         template: './index.html'
       }),
       new MiniCssExtractPlugin(),
-    //   new GhPagesWebpackPlugin({
-    //     path: './dist',
-    //     options: {
-    //         message: 'hotfix',
-    //         user: {
-    //             name: 'fry13',
-    //             email: 'ninetailed1995@gmail.com'
-    //         }
-    //     }
-    // })
+      
     ]
   };

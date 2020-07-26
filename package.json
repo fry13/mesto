@@ -26,6 +26,7 @@
   "homepage": "https://fry13.github.io/mesto",
   "devDependencies": {
     "@babel/core": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.10.4",
     "autoprefixer": "^9.8.5",
     "babel-loader": "^8.1.0",
@@ -43,5 +44,5 @@
   },
   "dependencies": {
     "core-js": "^3.6.5"
-  }
+  }  
 }

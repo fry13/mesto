@@ -44,6 +44,57 @@ const userInfo = new UserInfo(profileNameSelector, profileBioSelector, profileAv
 userInfo.getInitialUserInfo();
 
 
+// card creation
+
+const generateCard = (card) => {  
+  const cardElement = new Card(
+    card, 
+    cardTemplate, 
+    ()=> imgPopup.open(card.name, card.link), 
+    ()=> {
+      deleteCardPopup.setSubmitHandler(()=>{
+        cardElement.removeCard();
+      })
+      deleteCardPopup.open();
+    }, 
+    api, 
+    identity.id
+  );
+  cardsList.addItem(cardElement.getCard());
+}
+
+
+// render cards
+
+let cardsList = {};
+
+function addCards() {
+  api.getInitialCards().then(res => {
+    cardsList = new Section({
+      items: res,
+      renderer: (card) => generateCard(card)
+  },
+  cardContainerSelector
+  );
+  cardsList.render();
+  })
+}
+addCards();
+
+
+// new card popup
+
+function postCard(data) {
+  api.createCard(data.name, data.link)
+  .then(card => generateCard(card))
+  .then(cardPopup.close())      
+}
+
+const cardPopup = new PopupWithForm(cardPopupSelector, (data) => {
+  postCard(data)
+});
+
+
 // biography popup
 
 const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {
@@ -51,42 +102,11 @@ const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {
   api.setUserInfo(name, bio)
   .then(bioPopup.close());
 });
-bioPopup.setEventListeners();
 
 
 // image popup
 
 export const imgPopup = new PopupWithImage(photoPopupSelector);
-imgPopup.setEventListeners();
-
-
-// new card popup
-
-function postCard(data) {
-  api.createCard(data.name, data.link)
-  .then(res => {
-    const cardElement = new Card(
-      res, 
-      cardTemplate, 
-      ()=> imgPopup.open(res.name, res.link), 
-      ()=> {
-      deleteCardPopup.setSubmitHandler(()=>{
-        cardElement.removeCard();
-      })
-      deleteCardPopup.open();
-    }, 
-      api, 
-      identity.id
-    );
-    cardsList.addItem(cardElement.getCard());
-    cardPopup.close()
-  })
-}
-
-const cardPopup = new PopupWithForm(cardPopupSelector, (data) => {
-  postCard(data)
-});
-cardPopup.setEventListeners();
 
 
 // avatar popup
@@ -102,45 +122,11 @@ function newAvatar(data) {
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (link) => {
   newAvatar(link);
 });
-avatarPopup.setEventListeners();
 
 
 // delete card popup
 
 const deleteCardPopup = new PopupWithConfirm(deleteCardPopupSelector);
-deleteCardPopup.setEventListeners();
-
-
-// render cards
-
-let cardsList = {};
-
-function addCards() {
-  api.getInitialCards().then(res => {
-    cardsList = new Section({
-      items: res,
-      renderer: (data) => {
-        const cardElement = new Card(data, 
-          cardTemplate, 
-          ()=> imgPopup.open(data.name, data.link), 
-          ()=> {
-            deleteCardPopup.setSubmitHandler(()=>{
-              cardElement.removeCard();
-            })
-            deleteCardPopup.open();
-          }, 
-          api, 
-          identity.id
-        );
-        cardsList.addItem(cardElement.getCard());
-    }
-  },
-  cardContainerSelector
-  );
-  cardsList.render();
-  })
-}
-addCards();
 
 
 // button handlers

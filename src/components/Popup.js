@@ -5,16 +5,16 @@ export class Popup {
   }
 
   open() {
-    this._popup.classList.add('popup_visibility_visible');  
+    this._popup.classList.add('popup_visibility_visible');
+    this._setEventListeners();
   }
 
   close() {
-    this._popup.removeEventListener('mousedown', () => {this._handleMissсlick()});
-    document.removeEventListener('keyup', () => {this._handleEscClose()});
+    document.removeEventListener('keyup', this._handleEscClose);
     this._popup.classList.remove('popup_visibility_visible'); 
   }
 
-  _handleEscClose(evt) {
+  _handleEscClose = (evt) => {
     if (evt.key === 'Escape') {
       this.close();
     }
@@ -26,9 +26,9 @@ export class Popup {
     }  
   }
 
-  setEventListeners() {
+  _setEventListeners() {
     this._cross.addEventListener('click', () => {this.close()});
     this._popup.addEventListener('mousedown', (evt) => {this._handleMissсlick(evt)});    
-    document.addEventListener('keyup', (evt)=> {this._handleEscClose(evt)});
+    document.addEventListener('keyup', this._handleEscClose);
   }
 } 
