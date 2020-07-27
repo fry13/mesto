@@ -113,10 +113,8 @@ export const imgPopup = new PopupWithImage(photoPopupSelector);
 
 function newAvatar(data) {
   api.setAvatar(data)
-  .then((res)=>{
-    document.querySelector('.profile__avatar').src = res.avatar;
-    avatarPopup.close();
-  })
+  .then((res)=>document.querySelector('.profile__avatar').src = res.avatar)
+  .then(avatarPopup.close())
 }
 
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (link) => {

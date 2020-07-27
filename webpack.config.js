@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-
 module.exports = {
     entry: { main: './src/pages/index.js' },
     output: {
@@ -46,7 +45,6 @@ module.exports = {
       new HtmlWebpackPlugin({
         template: './index.html'
       }),
-      new MiniCssExtractPlugin(),
-      
+      new MiniCssExtractPlugin(),      
     ]
   };

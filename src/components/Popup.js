@@ -10,8 +10,8 @@ export class Popup {
   }
 
   close() {
+    this._popup.classList.remove('popup_visibility_visible');     
     document.removeEventListener('keyup', this._handleEscClose);
-    this._popup.classList.remove('popup_visibility_visible'); 
   }
 
   _handleEscClose = (evt) => {

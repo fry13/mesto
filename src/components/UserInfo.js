@@ -12,10 +12,6 @@ export class UserInfo {
   }
 
   getUserInfo() {
-    // this._userInfo = {
-    //   name: this._name.textContent,
-    //   bio: this._bio.textContent
-    // }
     return this._api.getUserInfo()
     .then(res => {
       this._userInfo = {
