@@ -6,7 +6,6 @@ export class Popup {
 
   open() {
     this._popup.classList.add('popup_visibility_visible');
-    this._setEventListeners();
   }
 
   close() {
@@ -26,7 +25,7 @@ export class Popup {
     }  
   }
 
-  _setEventListeners() {
+  setEventListeners() {
     this._cross.addEventListener('click', () => {this.close()});
     this._popup.addEventListener('mousedown', (evt) => {this._handleMissсlick(evt)});    
     document.addEventListener('keyup', this._handleEscClose);

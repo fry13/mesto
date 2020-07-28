@@ -69,14 +69,15 @@ const generateCard = (card) => {
 let cardsList = {};
 
 function addCards() {
-  api.getInitialCards().then(res => {
+  api.getInitialCards()
+  .then(res => {
     cardsList = new Section({
       items: res,
       renderer: (card) => generateCard(card)
-  },
-  cardContainerSelector
-  );
-  cardsList.render();
+      },
+      cardContainerSelector
+      );
+    cardsList.render();
   })
 }
 addCards();
@@ -86,13 +87,15 @@ addCards();
 
 function postCard(data) {
   api.createCard(data.name, data.link)
-  .then(card => generateCard(card))
+  .then(data => generateCard(data))
   .then(cardPopup.close())      
 }
 
-const cardPopup = new PopupWithForm(cardPopupSelector, (data) => {
-  postCard(data)
-});
+const cardPopup = new PopupWithForm(
+  cardPopupSelector, 
+  (data) => postCard(data)
+);
+cardPopup.setEventListeners();
 
 
 // biography popup
@@ -102,11 +105,13 @@ const bioPopup = new PopupWithForm(bioPopupSelector, ({name, bio}) => {
   api.setUserInfo(name, bio)
   .then(bioPopup.close());
 });
+bioPopup.setEventListeners();
 
 
 // image popup
 
 export const imgPopup = new PopupWithImage(photoPopupSelector);
+imgPopup.setEventListeners();
 
 
 // avatar popup
@@ -120,11 +125,13 @@ function newAvatar(data) {
 const avatarPopup = new PopupWithForm(avatarPopupSelector, (link) => {
   newAvatar(link);
 });
+avatarPopup.setEventListeners();
 
 
 // delete card popup
 
 const deleteCardPopup = new PopupWithConfirm(deleteCardPopupSelector);
+deleteCardPopup.setEventListeners();
 
 
 // button handlers

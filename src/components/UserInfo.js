@@ -20,7 +20,6 @@ export class UserInfo {
         avatar: res.avatar,
         id: res._id
       }
-      console.log(this._userInfo);
     })   
   }
 
